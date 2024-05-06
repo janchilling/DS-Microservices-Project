@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 require("dotenv").config();
 const connectToDatabase = require('./config/database');
-const authenticate = require("./middleware/authMiddleware");
+const {authenticate} = require("./middleware/authMiddleware");
 
 //Initializing the port number
 const PORT = process.env.PORT || 3001;
@@ -22,9 +22,9 @@ app.listen(PORT, () => {
 const authRouter = require('./routes/authRoutes');
 app.use('/auth',authRouter);
 
-// user routes
-const userRouter = require('./routes/userRoutes');
-app.use('/user', authenticate, userRouter);
+// student routes
+const studentRouter = require('./routes/studentRoutes');
+app.use('/student', authenticate, studentRouter);
 
 // instructor routes
 const instructorRouter = require('./routes/instructorRoutes');

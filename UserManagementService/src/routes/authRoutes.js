@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { adminRegister, registerUser, registerInstructor, loginUser} = require('../controllers/authController');
+const { adminRegister, registerStudent, registerInstructor, loginUser} = require('../controllers/authController');
 
 // Admin create account
 router.post('/createAdmin', adminRegister);
 
-// User registering
-router.post('/registerUser',registerUser);
+// Student registering
+router.post('/registerStudent',registerStudent);
 
 // Instructor registering
 router.post('/registerInstructor',registerInstructor);
