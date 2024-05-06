@@ -1,0 +1,31 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+require("dotenv").config();
+const connectToDatabase = require('./config/database');
+const authenticate = require("./middleware/authMiddleware");
+
+//Initializing the port number
+const PORT = process.env.PORT || 3001;
+
+app.use(bodyParser.json());
+app.use(express.json());
+
+//database and server connection
+connectToDatabase(process.env.MONGODB_URL);
+
+app.listen(PORT, () => {
+    console.log(`server is up and running on port number: ${PORT}`)
+})
+
+// auth routes
+const authRouter = require('./routes/authRoutes');
+app.use('/auth',authRouter);
+
+// user routes
+const userRouter = require('./routes/userRoutes');
+app.use('/user', authenticate, userRouter);
+
+// instructor routes
+const instructorRouter = require('./routes/instructorRoutes');
+app.use('/instructor', authenticate, instructorRouter);
