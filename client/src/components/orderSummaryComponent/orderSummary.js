@@ -4,6 +4,9 @@ import LoadingSpinner from "../loadingSpinnerComponent/loadingSpinnerComponent";
 
 export default function OrderSummary() {
 
+    const token = localStorage.getItem("token");
+    console.log(token)
+
     const [product, setProduct] = useState({
         name: "Go FullStack with KnowledgeHut",
         price: 1000,
@@ -18,7 +21,7 @@ export default function OrderSummary() {
 
     const handlePayment = async () => {
         setIsLoading(true);
-        await makePayment(product);
+        await makePayment(product, token);
         setIsLoading(false);
     };
 
