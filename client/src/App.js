@@ -7,6 +7,7 @@ import Header from './components/headerComponent/Header';
 import Footer from './components/footerComponent/Footer';
 
 import Home from './pages/homePage/homePage';
+import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Header/>
           <Routes>
             <Route path='' element={<Home/>}/>
+              <Route path='/order-summary' element={<OrderSummaryPage/>}/>
           </Routes>
         <Footer/>
       </Router>
