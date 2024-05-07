@@ -47,8 +47,11 @@ const isInstructor = (req, res, next) => {
 
 const isStudent = (req, res, next) => {
   const token = req.headers.authorization;
+  console.log(token)
   try {
+    const token = req.headers.authorization.split(" ")[1];
     const decodedToken = jwt.verify(token, "Your_Secret_Token");
+    console.log(decodedToken)
     if (decodedToken.type === 'student') {
       next();
     } else {
