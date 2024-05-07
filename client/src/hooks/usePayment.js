@@ -2,11 +2,12 @@ import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 
 const usePayment = () => {
-    const makePayment = async (product) => {
+    const makePayment = async (product, token) => {
         const stripe = await loadStripe('pk_test_51PDNzJEaSJ1mlAjvQjxA4Zhdhzesxxk6Hkhon3cCcnGbcVenbtWgWExR6kzsfSYZ2aGtZ2obQTCcQFpSdV5gmQd900uF1WkFSr');
         const body = { product };
         const headers = {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
         };
 
         try {
