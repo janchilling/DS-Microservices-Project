@@ -31,8 +31,7 @@ export default function OrderSummary() {
                         <td className="whitespace-nowrap py-4 md:w-[384px]">
                             <div className="flex items-center gap-4">
                                 <a href="#" className="flex items-center aspect-square w-10 h-10 shrink-0">
-                                    <img className="h-auto w-full max-h-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front.svg" alt="imac image" />
-                                    <img className="hidden h-auto w-full max-h-full dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="imac image" />
+                                    <img className="h-auto w-full max-h-full dark:hidden" src="https://wallpapers.com/images/featured/super-funny-pictures-u2ybmp92cuyfb6fm.jpg" alt="imac image" />
                                 </a>
                                 <a href="#" className="hover:underline">Course Name</a>
                             </div>

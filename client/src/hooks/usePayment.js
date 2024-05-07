@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
 
