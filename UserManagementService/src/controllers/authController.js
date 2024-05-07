@@ -1,5 +1,5 @@
 const Admin = require('../models/admin');
-const User = require('../models/user');
+const Student = require('../models/student');
 const Instructor = require('../models/instructor');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -7,10 +7,10 @@ const jwt = require('jsonwebtoken');
 // Checking whether the same email has been used in each userType
 const checkEmailExists = async (email) => {
   const admin = await Admin.findOne({ Email: email });
-  const user = await User.findOne({ Email: email });
+  const student = await Student.findOne({ Email: email });
   const instructor = await Instructor.findOne({ Email: email });
 
-  return admin || user || instructor;
+  return admin || student || instructor;
 };
 
 // Create an admin account
@@ -42,8 +42,8 @@ const adminRegister = async (req, res) => {
     }
 }
 
-// Registering a new user
-const registerUser =  async (req, res) => {
+// Registering a new student
+const registerStudent =  async (req, res) => {
     try {
       const {Fullname, Email, Password } = req.body;
       const existingEmail = await checkEmailExists(Email);
@@ -51,23 +51,23 @@ const registerUser =  async (req, res) => {
       if (!existingEmail){
         const hashPassword = await bcrypt.hash(Password,10);
   
-        const user = new User({
+        const student = new Student({
           Fullname,
           Email,
           Password: hashPassword,
         });
   
-        const token = jwt.sign({_id: user._id}, 'secretkey123',{
+        const token = jwt.sign({_id: student._id}, 'secretkey123',{
           expiresIn: '60d',
         });
   
-        await user.save();
-        res.json({ message: 'User registration successful', token});
+        await student.save();
+        res.json({ message: 'Student registration successful', token});
       }else{
         res.json({ message: 'This email is already exists'});
       }
     } catch (error) {
-      res.status(500).json({ error: 'User registration failed'});
+      res.status(500).json({ error: 'Student registration failed'});
     }
 }
 
@@ -120,11 +120,11 @@ const loginUser = async (req, res) => {
         loginmessage = "Instructor logging successfully...!";
         type = 'instructor';
       } else {
-        const normaluser = await User.findOne({ Email });
-        if (normaluser) {
-          user = normaluser;
-          loginmessage = "User logging successfully...!";
-          type = 'user';
+        const normalstudent = await Student.findOne({ Email });
+        if (normalstudent) {
+          user = normalstudent;
+          loginmessage = "Student logging successfully...!";
+          type = 'student';
         } else {
           return res.status(404).json({ error: "Email not found" });
         }
@@ -134,7 +134,7 @@ const loginUser = async (req, res) => {
     const passwordMatch = await bcrypt.compare(Password, user.Password);
   
     if (passwordMatch) { 
-      const token = jwt.sign({ email: user.Email }, "Your_Secret_Token", { expiresIn: '1h' });
+      const token = jwt.sign({ email: user.Email, type: user.Type }, "Your_Secret_Token", { expiresIn: '1h' });
       return res.status(200).json({ message: loginmessage, token, user, type });
     } else {
       return res.status(401).json({ error: "Password incorrect" });
@@ -146,7 +146,7 @@ const loginUser = async (req, res) => {
 
 module.exports = {
     adminRegister,
-    registerUser,
+    registerStudent,
     registerInstructor,
     loginUser
 };
