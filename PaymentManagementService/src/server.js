@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const app = express();
@@ -10,7 +10,7 @@ const port = process.env.PORT || 3003;
 
 // app middlewares
 app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(express.json())
 
 //database connection
@@ -25,8 +25,8 @@ mongoose.connect(URL).then(() => {
 })
 
 
-// const userRouter = require("./routes/user.js");
-// app.use("/user",authenticate, userRouter);
+const checkoutRoutes = require("./routes/checkoutRoutes");
+app.use('/checkout', checkoutRoutes);
 
 
 

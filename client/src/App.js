@@ -1,12 +1,17 @@
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import "./index.css"
+import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-5xl font-bold underline">
-        Hello world!
-      </h1>
-    </div>
+      <Router>
+              <div>
+                  <Routes>
+                      <Route path="/orderSummary" element={<OrderSummaryPage/>}/>
+                  </Routes>
+              </div>
+      </Router>
   );
 }
 
