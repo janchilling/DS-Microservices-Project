@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { useState, useEffect} from "react";
 import UserContext from "../src/ContextComponent/ContextComponent";
- 
+
 // Header and Footer
 import Header from './components/headerComponent/Header';
 import Footer from './components/footerComponent/Footer';
@@ -14,13 +14,16 @@ import LoginComponent from './auth/components/loginComponent/loginComponent';
 // Instructor Components
 import CreateCoursePage from './pages/createCoursePage/createCoursePage';
 import InstructorDashboard from './pages/instructorDashboardPage/instructorDashboard';
- 
- 
+
+// Auth Components
+import RegisterComponent from './auth/components/registerComponent/registerComponent';
+import LoginComponent from './auth/components/loginComponent/loginComponent';
+
 import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
  
 function App() {
- 
+
   // user details pass
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
@@ -33,7 +36,7 @@ function App() {
       localStorage.removeItem("user");
     }
   }, [user]);
- 
+
   return (
       <Router>
         <UserContext.Provider value={{ user, setUser }}>

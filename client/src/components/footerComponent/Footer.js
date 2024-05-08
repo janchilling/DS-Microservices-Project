@@ -9,7 +9,7 @@ import instagramLogo from '../../images/icon-instagram.svg';
 
 const Footer = () => {
   return (
-    <div className=' bg-black'>
+    <div className='bg-black '>
       {/* Flex Container */}
       <div className='container flex flex-col-reverse justify-between px-6 py-10 mx-auto space-y-8 md:flex-row md:space-y-0'>
         {/* Logo and social links container */}
@@ -83,7 +83,7 @@ const Footer = () => {
                 className='flex-1 px-4 rounded-full focus:outline-none'
                 placeholder='Updated in your inbox'
               />
-              <button className='px-6 py-2 text-white rounded-full bg-orange-600 hover:bg-orange-400 focus:outline-none'>
+              <button className='px-6 py-2 text-white bg-orange-600 rounded-full hover:bg-orange-400 focus:outline-none'>
                 Go
               </button>
             </div>
