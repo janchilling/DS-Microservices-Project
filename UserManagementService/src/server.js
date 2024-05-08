@@ -29,3 +29,6 @@ app.use('/student', authenticate, studentRouter);
 // instructor routes
 const instructorRouter = require('./routes/instructorRoutes');
 app.use('/instructor', authenticate, instructorRouter);
+
+const authenticateRole = require('./routes/authenticateRole');
+app.use('/authenticate-role', authenticateRole);
