@@ -1,4 +1,5 @@
 let Course = require("../models/course");
+const authenticateRole = require("../middleware/authenticationRole");
 const { bucket } = require("../config/firebaseConfig");
 
 //create new course
