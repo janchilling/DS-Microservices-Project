@@ -1,4 +1,5 @@
 let Course = require("../models/course");
+const authenticateRole = require("../middleware/authenticationRole");
 
 //create new course
 const createCourse = async(req, res) => {
@@ -16,32 +17,46 @@ const createCourse = async(req, res) => {
 
     newCourse.save().then(() => {
         //validations
-        if (Price <= 0 || !Price === 'number') {
-            return res.status(400).json({ message: 'The Price must be positive and should be a number!' })
-        }
-        if (!CourseName || !CourseCode || !Description || !Instructor || Price || Image || Duration) {
-            return res.status(400).json({ message: 'All fields are required!' })
-        }
-        res.json("Course was created successfully!")
-    }).catch((error) => {
-        console.log(error);
+        if(price <= 0 || !Price === 'num')
+
+            res.json("Course made successfully")
+    }).catch((err) => {
+        console.log(err);
     })
+
 }
 
 //view all courses
-const getAllCourses = async(req, res) => {
+const getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find();
 
-    Course.find().then((courses) => {
-        res.json(courses)
-    }).catch((error) => {
+        // Map each course to include the image URL
+        const coursesWithImageUrls = courses.map(course => {
+            return {
+                _id: course._id,
+                CourseName: course.CourseName,
+                CourseCode: course.CourseCode,
+                Description: course.Description,
+                Instructor: course.Instructor,
+                Price: course.Price,
+                ImageUrl: course.ImageUrl,
+                Duration: course.Duration
+            };
+        });
+
+        res.json(coursesWithImageUrls);
+    } catch (error) {
         console.log(error);
-    })
-}
+        res.status(500).json({ message: 'Error fetching courses' });
+    }
+};
+
 
 //update a course by id
 const updateCourse = async (req, res) => {
     let courseId = req.params.id;
-    const { CourseName, CourseCode, Description, Instructor, Price, Image, Duration } = req.body;
+    const { CourseName, CourseCode, Description, Instructor, Price, Duration } = req.body;
 
     const updateCourse = {
         CourseName,
@@ -49,7 +64,6 @@ const updateCourse = async (req, res) => {
         Description,
         Instructor,
         Price,
-        Image,
         Duration
     }
 

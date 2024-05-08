@@ -6,6 +6,7 @@ import CallToAction from "../../components/callToActionComponent/callToActionCom
 import InstructorMain from "../../components/instructorMainComponent/instructorMain";
 import UserContext from '../../ContextComponent/ContextComponent';
 
+
 export default function Home() {
 
     const { user } = useContext(UserContext);
