@@ -7,64 +7,70 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
-    <nav className='relative container mx-auto p-6'>
-      {/* Flex Container */}
-      <div className='flex items-center justify-between'>
-        {/* Logo */}
-        <div className='pt-2'>
-          <Link to='/'>
-            <img src={companyLogo} alt='' />
-          </Link>
-        </div>
-        {/* Menu Items */}
-        <div className='hidden space-x-6 md:flex'>
-          <Link to='/home' className='hover:text-gray-400'>
-            Pricing
-          </Link>
-          <Link to='#' className='hover:text-gray-400'>
-            Product
-          </Link>
-          <Link to='#' className='hover:text-gray-400'>
-            About Us
-          </Link>
-          <Link to='#' className='hover:text-gray-400'>
-            Careers
-          </Link>
-          <Link to='#' className='hover:text-gray-400'>
-            Community
-          </Link>
-        </div>
-        <div className='flex space-x-1'>
-          {/* Login Button */}
-          <Link
-            to='#'
-            className='hidden p-3 px-6 pt-2 text-black text-xl font-bold rounded-full baseline hover:text-orange-600 md:block'
-          >
-            Login
-          </Link>
-          {/* Get Started Button */}
-          <Link
-            to='#'
-            className='hidden p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400 md:block'
-          >
-            Get Started
-          </Link>
-        </div>
+    <div>
+      {/* Navbar */}
+      <nav className='container relative p-6 mx-auto'>
+        {/* Flex Container */}
+        <div className='flex items-center justify-between'>
+          {/* Logo */}
+          <div className='pt-2'>
+            <Link to='/'>
+              <img src={companyLogo} alt='' />
+            </Link>
+          </div>
+          {/* Menu Items */}
+          <div className='hidden space-x-6 md:flex'>
+            <Link to='/home' className='hover:text-gray-400'>
+              Pricing
+            </Link>
+            <Link to='#' className='hover:text-gray-400'>
+              Product
+            </Link>
+            <Link to='#' className='hover:text-gray-400'>
+              About Us
+            </Link>
+            <Link to='#' className='hover:text-gray-400'>
+              Careers
+            </Link>
+            <Link to='#' className='hover:text-gray-400'>
+              Community
+            </Link>
+          </div>
+          <div className='flex space-x-1'>
+            {/* Login Button */}
+            <Link
+              to='/login'
+              className='hidden p-3 px-6 pt-2 text-xl font-bold text-black rounded-full baseline hover:text-orange-600 md:block'
+            >
+              Login
+            </Link>
+            {/* Get Started Button */}
+            <Link
+              to='/register'
+              className='hidden p-3 px-6 pt-3 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400 md:block'
+            >
+              Get Started
+            </Link>
+          </div>
 
-        {/* Hamburger Icon */}
-        <button
-          className={
-            toggleMenu
-              ? 'open block hamburger md:hidden focus:outline-none'
-              : 'block hamburger md:hidden focus:outline-none'
-          }
-          onClick={() => setToggleMenu(!toggleMenu)}
-        >
-          <span className='hamburger-top'></span>
-          <span className='hamburger-middle'></span>
-          <span className='hamburger-bottom'></span>
-        </button>
-      </div>
+          {/* Hamburger Icon */}
+          <button
+            className={
+              toggleMenu
+                ? 'open block hamburger md:hidden focus:outline-none'
+                : 'block hamburger md:hidden focus:outline-none'
+            }
+            onClick={() => setToggleMenu(!toggleMenu)}
+          >
+            <span className='hamburger-top'></span>
+            <span className='hamburger-middle'></span>
+            <span className='hamburger-bottom'></span>
+          </button>
+        </div>
+      </nav>
+      
+      {/* Orange Line */}
+      {/* <div className="h-0.5 bg-orange-600"></div> */}
 
       {/* Mobile Menu */}
       <div className='md:hidden'>
@@ -82,21 +88,21 @@ const Navbar = () => {
           <Link to='#'>Community</Link>
           {/* Login Button */}
           <Link
-            to='#'
-            className='p-3 px-6 pt-2 text-black text-xl font-bold rounded-full baseline hover:text-orange-600'
+            to='/login'
+            className='p-3 px-6 pt-2 text-xl font-bold text-black rounded-full baseline hover:text-orange-600'
           >
             Login
           </Link>
           {/* Get Started Button */}
           <Link
-            to='#'
+            to='/register'
             className='p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400'
           >
             Get Started
           </Link>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 
