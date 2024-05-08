@@ -3,10 +3,10 @@ const bodyParser = require("body-parser");
 const app = express();
 require("dotenv").config();
 
-const databaseConnection = require('./config/database');
+const databaseConnection = require('./src/config/database.js');
 
 //Initializing the port number
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3004;
 
 app.use(bodyParser.json());
 app.use(express.json());
@@ -15,9 +15,9 @@ app.use(express.json());
 databaseConnection(process.env.MONGODB_URL);
 
 app.listen(PORT, () => {
-    console.log(`Course Service Server is up and running on port number: ${PORT}`)
+    console.log(`Enrolment Service Server is up and running on port number: ${PORT}`)
 })
 
 //implementation of the the course route
-const courseRouter = require("./src/routes/courses.js");
-app.use("/course", courseRouter);
+const enrollmentRouter = require("./src/routes/enrollment.js");
+app.use("/enrollment", enrollmentRouter);
