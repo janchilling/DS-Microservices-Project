@@ -1,47 +1,89 @@
 let Course = require("../models/course");
+const { bucket } = require("../config/firebaseConfig");
 
 //create new course
 const createCourse = async(req, res) => {
-    const { CourseName, CourseCode, Description, Instructor, Price, Image, Duration } = req.body;
+    const { CourseName, CourseCode, Description, Instructor, Price, Duration } = req.body;
+    const imageFile = req.file;
 
-    const newCourse = new Course({
-        CourseName,
-        CourseCode,
-        Description,
-        Instructor,
-        Price,
-        Image,
-        Duration
-    })
+    // Check if image file is provided
+    if (!imageFile) {
+        return res.status(400).json({ message: 'Image file is required' });
+    }
 
-    newCourse.save().then(() => {
-        //validations
-        if (Price <= 0 || !Price === 'number') {
-            return res.status(400).json({ message: 'The Price must be positive and should be a number!' })
-        }
-        if (!CourseName || !CourseCode || !Description || !Instructor || Price || Image || Duration) {
-            return res.status(400).json({ message: 'All fields are required!' })
-        }
-        res.json("Course was created successfully!")
-    }).catch((error) => {
-        console.log(error);
-    })
+    try {
+        // Upload image to Firebase Storage
+        const imageName = `${Date.now()}_${imageFile.originalname}`;
+        const file = bucket.file(imageName);
+        const fileStream = file.createWriteStream({
+            metadata: {
+                contentType: imageFile.mimetype
+            }
+        });
+
+        fileStream.on('error', (error) => {
+            console.error(error);
+            res.status(500).json({ message: 'Error uploading image' });
+        });
+
+        fileStream.on('finish', async () => {
+            // Image uploaded successfully, get the public URL
+            const imageUrl = `https://storage.googleapis.com/${bucket.name}/${imageName}`;
+
+            // Create new course with the image URL
+            const newCourse = new Course({
+                CourseName,
+                CourseCode,
+                Description,
+                Instructor,
+                Price,
+                ImageUrl: imageUrl,
+                Duration
+            });
+
+            // Save the course to MongoDB
+            await newCourse.save();
+            res.json({ message: 'Course created successfully!' });
+        });
+
+        fileStream.end(imageFile.buffer);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error creating course' });
+    }
 }
 
 //view all courses
-const getAllCourses = async(req, res) => {
+const getAllCourses = async (req, res) => {
+    try {
+        const courses = await Course.find();
 
-    Course.find().then((courses) => {
-        res.json(courses)
-    }).catch((error) => {
+        // Map each course to include the image URL
+        const coursesWithImageUrls = courses.map(course => {
+            return {
+                _id: course._id,
+                CourseName: course.CourseName,
+                CourseCode: course.CourseCode,
+                Description: course.Description,
+                Instructor: course.Instructor,
+                Price: course.Price,
+                ImageUrl: course.ImageUrl,
+                Duration: course.Duration
+            };
+        });
+
+        res.json(coursesWithImageUrls);
+    } catch (error) {
         console.log(error);
-    })
-}
+        res.status(500).json({ message: 'Error fetching courses' });
+    }
+};
+
 
 //update a course by id
 const updateCourse = async (req, res) => {
     let courseId = req.params.id;
-    const { CourseName, CourseCode, Description, Instructor, Price, Image, Duration } = req.body;
+    const { CourseName, CourseCode, Description, Instructor, Price, Duration } = req.body;
 
     const updateCourse = {
         CourseName,
@@ -49,7 +91,6 @@ const updateCourse = async (req, res) => {
         Description,
         Instructor,
         Price,
-        Image,
         Duration
     }
 

@@ -19,5 +19,5 @@ app.listen(PORT, () => {
 })
 
 //implementation of the the course route
-const courseRouter = require("./src/routes/courses.js");
+const courseRouter = require("./routes/courses");
 app.use("/course", courseRouter);

@@ -26,6 +26,6 @@ router.delete("/deleteCourse/:id", isAdmin, isInstructor, deleteCourse);
 router.get("/getCourse/:id", isAdmin, isInstructor, viewOneCourseById);
 
 //search course
-router.get("/searchCourse/:key", isAdmin, isInstructor, searchCourse);
+router.get("/searchCourse/:key", searchCourse);
 
 module.exports = router;
