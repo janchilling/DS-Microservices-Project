@@ -16,6 +16,8 @@ import CreateCoursePage from './pages/createCoursePage/createCoursePage';
 
 import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
+
+import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
  
 function App() {
 
@@ -42,6 +44,7 @@ function App() {
               <Route path='/login' element={<LoginComponent/>}/>
               <Route path='/order-summary' element={<OrderSummaryPage/>}/>
               <Route path='/createCourse' element={<CreateCoursePage/>}/>
+              <Route path='/enrollments' element={<EnrollmentsPage/>}/>
             </Routes>
           <Footer/>
         </UserContext.Provider>
