@@ -18,7 +18,6 @@ import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
-
  
 function App() {
 
