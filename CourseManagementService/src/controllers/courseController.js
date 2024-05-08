@@ -1,57 +1,29 @@
 let Course = require("../models/course");
 const authenticateRole = require("../middleware/authenticationRole");
-const { bucket } = require("../config/firebaseConfig");
 
 //create new course
 const createCourse = async(req, res) => {
-    const { CourseName, CourseCode, Description, Instructor, Price, Duration } = req.body;
-    const imageFile = req.file;
+    const { CourseName, CourseCode, Description, Instructor, Price, Image, Duration } = req.body;
 
-    // Check if image file is provided
-    if (!imageFile) {
-        return res.status(400).json({ message: 'Image file is required' });
-    }
+    const newCourse = new Course({
+        CourseName,
+        CourseCode,
+        Description,
+        Instructor,
+        Price,
+        Image,
+        Duration
+    })
 
-    try {
-        // Upload image to Firebase Storage
-        const imageName = `${Date.now()}_${imageFile.originalname}`;
-        const file = bucket.file(imageName);
-        const fileStream = file.createWriteStream({
-            metadata: {
-                contentType: imageFile.mimetype
-            }
-        });
+    newCourse.save().then(() => {
+        //validations
+        if(price <= 0 || !Price === 'num')
 
-        fileStream.on('error', (error) => {
-            console.error(error);
-            res.status(500).json({ message: 'Error uploading image' });
-        });
+            res.json("Course made successfully")
+    }).catch((err) => {
+        console.log(err);
+    })
 
-        fileStream.on('finish', async () => {
-            // Image uploaded successfully, get the public URL
-            const imageUrl = `https://storage.googleapis.com/${bucket.name}/${imageName}`;
-
-            // Create new course with the image URL
-            const newCourse = new Course({
-                CourseName,
-                CourseCode,
-                Description,
-                Instructor,
-                Price,
-                ImageUrl: imageUrl,
-                Duration
-            });
-
-            // Save the course to MongoDB
-            await newCourse.save();
-            res.json({ message: 'Course created successfully!' });
-        });
-
-        fileStream.end(imageFile.buffer);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error creating course' });
-    }
 }
 
 //view all courses
