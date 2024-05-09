@@ -1,8 +1,10 @@
 const express = require("express");
-const proxy = require("express-http-proxy");
+const proxy = require("express-http-proxy")
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 // Set up CORS
@@ -16,9 +18,9 @@ app.use((req, res, next) => {
 });
 
 // Proxy requests to different services
-app.use("/api/payment", proxy("http://payment-management-service:3003"));
 app.use("/UserManagementService", proxy("http://localhost:3001"));
 app.use("/CourseManagementService", proxy("http://localhost:3002"));
+app.use("/PaymentManagementService", proxy("http://payment-management-service:3003"));
 
 // Start the API Gateway
 const PORT = process.env.PORT || 8000;
