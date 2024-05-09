@@ -46,4 +46,13 @@ services:
     depends_on:
       - user-management-service
 
+  enrollment-management-service:
+    build:
+      context: ./EnrollmentManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    depends_on:
+      - user-management-service
+
 
