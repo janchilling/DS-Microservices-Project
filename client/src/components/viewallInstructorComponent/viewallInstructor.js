@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import UserContext from '../../ContextComponent/ContextComponent';
+import useFetchInstructorDetails from '../../hooks/useinstructorDetails';
 
 const ViewallInstructors = () => {
+
     const [searchTerm, setSearchTerm] = useState('');
-    const [users, setUsers] = useState([]); // Assuming users is fetched from somewhere
+    const { user } = useContext(UserContext);
+    const { instructorallData } = useFetchInstructorDetails(user._id, searchTerm);
+    const [filteredInstructors, setFilteredInstructors] = useState([]);
+
+    useEffect(() => {
+        if (searchTerm !== '') {
+            setFilteredInstructors(instructorallData);
+        } else {
+            setFilteredInstructors([]);
+        }
+    }, [searchTerm, instructorallData]);
 
     // Function to delete a user
     const deleteUser = (userId) => {
         // Implement your delete logic here
     };
-
-    // Filter users based on search term
-    const filteredUsers = users.filter(user =>
-        user.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
 
     // Breadcrumbs component
     const Breadcrumbs = () => {
@@ -44,7 +52,7 @@ const ViewallInstructors = () => {
     };
 
     return (
-        <div className="container mx-auto mt-4 mb-16">
+        <div className="container mx-auto mt-4 mb-16 px-16">
             <Breadcrumbs/>
             <h1 className="mb-4 text-3xl font-bold text-orange-500">All Instructors</h1>
             <input
@@ -63,10 +71,10 @@ const ViewallInstructors = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {filteredUsers.map(user => ( */}
+                    {instructorallData && instructorallData.map(user => (
                         <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
+                            <td className="px-4 py-2 border">{user.Instructorname}</td>
+                            <td className="px-4 py-2 border">{user.Email}</td>
                             <td className="px-4 py-2 text-center border">
                                 <button
                                     className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
@@ -75,73 +83,7 @@ const ViewallInstructors = () => {
                                 </button>
                             </td>
                         </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    {/* ))} */}
+                    ))} 
                 </tbody>
             </table>
         </div>

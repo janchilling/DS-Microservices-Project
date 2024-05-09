@@ -16,7 +16,11 @@ const Navbar = () => {
   };
 
   const handleProfile = () => {
-     window.location.href = `/profile/${user._id}`
+  if (user.Type !== 'admin') {
+    window.location.href = `/profile/${user._id}`;
+  } else {
+    console.log('Admins cannot access the profile page.');
+  }
   };
 
   // Check if user is an instructor or admin

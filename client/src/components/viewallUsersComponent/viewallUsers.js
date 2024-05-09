@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import useFetchUserDetails from '../../hooks/useUserDetails';
+import UserContext from '../../ContextComponent/ContextComponent';
 
 const ViewallUsers = () => {
+
     const [searchTerm, setSearchTerm] = useState('');
-    const [users, setUsers] = useState([]); // Assuming users is fetched from somewhere
+    const { user } = useContext(UserContext);
+    const { studentallData, deleteUser } = useFetchUserDetails(user._id, searchTerm);
+    const [filteredStudents, setFilteredStudents] = useState([]);
+
+    useEffect(() => {
+        if (searchTerm !== '') {
+            setFilteredStudents(studentallData);
+        } else {
+            setFilteredStudents([]);
+        }
+    }, [searchTerm, studentallData]);
 
     // Function to delete a user
-    const deleteUser = (userId) => {
-        // Implement your delete logic here
+    const handleDeleteUser = async (userId) => {
+        // Call deleteUser with the userId
+        await deleteUser(userId);
     };
-
-    // Filter users based on search term
-    const filteredUsers = users.filter(user =>
-        user.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
 
     // Breadcrumbs component
     const Breadcrumbs = () => {
@@ -44,7 +53,7 @@ const ViewallUsers = () => {
     };
 
     return (
-        <div className="container mx-auto mt-4 mb-16">
+        <div className="container mx-auto mt-4 mb-16 px-16">
             <Breadcrumbs/>
             <h1 className="mb-4 text-3xl font-bold text-orange-500">All Users</h1>
             <input
@@ -63,85 +72,20 @@ const ViewallUsers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {filteredUsers.map(user => ( */}
+                    {studentallData && studentallData.map(user => (
                         <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
+                            <td className="px-4 py-2 border">{user.Fullname}</td>
+                            <td className="px-4 py-2 border">{user.Email}</td>
                             <td className="px-4 py-2 text-center border">
                                 <button
+                                    onClick={handleDeleteUser(user._id)}
                                     className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
                                 >
                                     Delete
                                 </button>
                             </td>
                         </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td className="px-4 py-2 border">Bihesha Dilshan</td>
-                            <td className="px-4 py-2 border">bihesha@gmail.com</td>
-                            <td className="px-4 py-2 text-center border">
-                                <button
-                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    {/* ))} */}
+                    ))} 
                 </tbody>
             </table>
         </div>

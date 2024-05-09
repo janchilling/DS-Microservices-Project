@@ -23,7 +23,7 @@ const Breadcrumbs = () => {
 
 export default function manageUserPage() {
     return (
-        <section className="container mx-auto mt-4 mb-16">
+        <section className="container mx-auto mt-4 mb-16 px-16">
             <Breadcrumbs/>
             <div className="max-w-4xl mx-auto">
                 <h2 className="font-mono text-2xl font-semibold text-center sm:text-5xl">Manage all Users</h2>

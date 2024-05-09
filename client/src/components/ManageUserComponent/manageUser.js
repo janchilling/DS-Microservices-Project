@@ -1,5 +1,6 @@
 import React from 'react';
-import img1 from '../../images/courseSlider/course2.jpg';
+import img1 from '../../images/instructor.jpg';
+import img2 from '../../images/student.jpg';
 
 const ManageUser = () => {
     return (
@@ -24,7 +25,7 @@ const ManageUser = () => {
 
             <div className="max-w-sm mb-8 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="/all-users">
-                    <img className="rounded-t-lg" src={img1} alt="" />
+                    <img className="rounded-t-lg h-48" src={img2} alt="" />
                 </a>
                 <div className="p-5">
                     <a href="/all-users">
