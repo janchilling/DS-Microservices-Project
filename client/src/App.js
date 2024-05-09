@@ -18,6 +18,7 @@ import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
+import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
  
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
               <Route path='/order-summary' element={<OrderSummaryPage/>}/>
               <Route path='/createCourse' element={<CreateCoursePage/>}/>
               <Route path='/enrollments' element={<EnrollmentsPage/>}/>
+              <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
             </Routes>
           <Footer/>
         </UserContext.Provider>

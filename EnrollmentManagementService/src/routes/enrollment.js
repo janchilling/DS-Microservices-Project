@@ -5,6 +5,7 @@ const { isAdmin, isInstructor, isStudent } = require("../middleware/authMiddlewa
 const {
     createEnrollment,
     getEnrollmentsByUser,
+    getAllEnrollments,
     getEnrollmentsByCourse,
     updateEnrollmentStatus,
     cancelEnrollment,
@@ -13,6 +14,9 @@ const {
 
 // Create Enrollment
 router.post("/createEnrollment", createEnrollment);
+
+// Get All Enrollments
+router.get("/getAllEnrollments", getAllEnrollments);
 
 // Get Enrollments by User
 router.get("/user/:userId", getEnrollmentsByUser);

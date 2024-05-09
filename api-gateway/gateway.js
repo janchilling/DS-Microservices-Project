@@ -17,13 +17,13 @@ app.use((req, res, next) => {
     next();
 });
 
-// Proxy requests to different services
+// Proxy requests to different service
 app.use("/UserManagementService", proxy("http://user-management-service:3001"));
 app.use("/CourseManagementService", proxy("http://course-management-service:3002"));
 app.use("/PaymentManagementService", proxy("http://payment-management-service:3003"));
 
 // Start the API Gateway
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {
     console.log(`Gateway is Listening to Port ${PORT}`);
 });
