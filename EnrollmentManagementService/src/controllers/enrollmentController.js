@@ -21,6 +21,17 @@ const createEnrollment = async (req, res) => {
     }
 };
 
+// Get All Enrollments
+const getAllEnrollments = async (req, res) => {
+    try {
+        const enrollments = await Enrollment.find();
+        res.json(enrollments);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to retrieve enrollments" });
+    }
+};
+
 // Get Enrollments by User
 const getEnrollmentsByUser = async (req, res) => {
     const userId = req.params.userId;
@@ -90,6 +101,7 @@ const checkEnrollmentStatus = async (req, res) => {
 module.exports = {
     createEnrollment,
     getEnrollmentsByUser,
+    getAllEnrollments,
     getEnrollmentsByCourse,
     updateEnrollmentStatus,
     cancelEnrollment,
