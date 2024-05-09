@@ -23,3 +23,5 @@ yarn-error.log*
 
 .idea
 node_modules
+
+mongo-data

@@ -5,8 +5,6 @@ const createCheckoutSession = async (req, res) => {
     const { product } = req.body;
 
     try {
-        // Authenticate user's role before proceeding
-        authenticateRole(req, res, async () => {
             const session = await stripe.checkout.sessions.create({
                 payment_method_types: ['card'],
                 line_items: [
@@ -28,7 +26,6 @@ const createCheckoutSession = async (req, res) => {
             });
 
             res.json({ id: session.id });
-        });
     } catch (error) {
         console.error('Error creating checkout session:', error);
         res.status(500).json({ error: 'Failed to create checkout session' });

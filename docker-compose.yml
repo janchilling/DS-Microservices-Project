@@ -23,3 +23,14 @@ services:
       - "27017:27017"
     volumes:
       - ./mongo-data:/data/db
+
+  gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - payment-management-service
+      - client-service
+      - mongo
