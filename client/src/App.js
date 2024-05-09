@@ -14,8 +14,15 @@ import LoginComponent from './auth/components/loginComponent/loginComponent';
 // Instructor Components
 import CreateCoursePage from './pages/createCoursePage/createCoursePage';
 
+// Admin Components
+import ManageCoursePage from './pages/manageCoursePage/manageCoursePage';
+import ManageUserPage from './pages/manageUserPage/manageUserPage';
+import ViewallUsersPage from './pages/viewUsersPage/viewUsersPage';
+import ViewallInstructorsPage from './pages/viewInstructorPage/viewInstructorPage';
+
 import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
+import Profile from './pages/profilePage/profilePage';
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
  
@@ -42,9 +49,14 @@ function App() {
               <Route path='' element={<Home/>}/>
               <Route path='/register' element={<RegisterComponent/>}/>
               <Route path='/login' element={<LoginComponent/>}/>
+              <Route path='/profile/:id' element={<Profile/>}/>
               <Route path='/order-summary' element={<OrderSummaryPage/>}/>
               <Route path='/createCourse' element={<CreateCoursePage/>}/>
               <Route path='/enrollments' element={<EnrollmentsPage/>}/>
+              <Route path='/manage-courses' element={<ManageCoursePage/>}/>
+              <Route path='/manage-users' element={<ManageUserPage/>}/>
+              <Route path='/all-users' element={<ViewallUsersPage/>}/>
+              <Route path='/all-instructors' element={<ViewallInstructorsPage/>}/>
             </Routes>
           <Footer/>
         </UserContext.Provider>

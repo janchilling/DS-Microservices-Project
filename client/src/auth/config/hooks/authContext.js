@@ -60,7 +60,12 @@ const useAuth = () => {
         }
     }
 
-    return { studentSignup, instructorSignup, login };
+    const logout = () => {
+        localStorage.clear();
+        window.location.href = '/';
+    }
+
+    return { studentSignup, instructorSignup, login, logout };
 }
 
 export default useAuth;
