@@ -1,14 +1,6 @@
 version: '3'
 
 services:
-  payment-management-service:
-    build:
-      context: ./PaymentManagementService
-      dockerfile: Dockerfile
-    ports:
-      - "3003:3003"
-    depends_on:
-      - mongo
 
   client-service:
     build:
@@ -16,13 +8,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-
-  mongo:
-    image: mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./mongo-data:/data/db
 
   gateway:
     build:
@@ -32,5 +17,33 @@ services:
       - "8000:8000"
     depends_on:
       - payment-management-service
+      - user-management-service
+      - course-management-service
       - client-service
-      - mongo
+
+  user-management-service:
+    build:
+      context: ./UserManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+
+  course-management-service:
+    build:
+      context: ./CourseManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - user-management-service
+
+  payment-management-service:
+    build:
+      context: ./PaymentManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    depends_on:
+      - user-management-service
+
+
