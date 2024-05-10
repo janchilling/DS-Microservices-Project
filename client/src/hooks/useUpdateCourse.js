@@ -5,7 +5,7 @@ const useUpdateCourse = () => {
 
     const updateCourse = async (id, formData) => {
         try {
-            const response = await fetch(`http://localhost:8000/CourseManagementService/course/updateCourse/${id}`, {
+            const response = await fetch(`http://localhost:8800/CourseManagementService/course/updateCourse/${id}`, {
                 method: 'PUT',
                 body: JSON.stringify(formData),
                 headers: {
