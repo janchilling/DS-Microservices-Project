@@ -24,11 +24,11 @@ app.use('/auth',authRouter);
 
 // student routes
 const studentRouter = require('./routes/studentRoutes');
-app.use('/student', authenticate, studentRouter);
+app.use('/student', studentRouter);
 
 // instructor routes
 const instructorRouter = require('./routes/instructorRoutes');
-app.use('/instructor', authenticate, instructorRouter);
+app.use('/instructor',  instructorRouter);
 
 const authenticateRole = require('./routes/authenticateRole');
 app.use('/authenticate-role', authenticateRole);
