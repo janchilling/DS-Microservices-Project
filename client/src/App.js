@@ -17,8 +17,15 @@ import GetCoursesByUserPage from './pages/getCoursesByUserPage/getCoursesByUserP
 import GetCourseByIdPage from './pages/getCourseByIdPage/getCourseByIdPage';
 import UpdateCoursePage from './pages/updateCoursePage/updateCoursePage';
 
+// Admin Components
+import ManageCoursePage from './pages/manageCoursePage/manageCoursePage';
+import ManageUserPage from './pages/manageUserPage/manageUserPage';
+import ViewallUsersPage from './pages/viewUsersPage/viewUsersPage';
+import ViewallInstructorsPage from './pages/viewInstructorPage/viewInstructorPage';
+
 import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
+import Profile from './pages/profilePage/profilePage';
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
 import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
@@ -46,12 +53,17 @@ function App() {
               <Route path='' element={<Home/>}/>
               <Route path='/register' element={<RegisterComponent/>}/>
               <Route path='/login' element={<LoginComponent/>}/>
+              <Route path='/profile/:id' element={<Profile/>}/>
               <Route path='/order-summary' element={<OrderSummaryPage/>}/>
               <Route path='/createCourse' element={<CreateCoursePage/>}/>
               <Route path='/getCourses' element={<GetCoursesByUserPage/>}/>
               <Route path='/viewCourse/:id' element={<GetCourseByIdPage/>}/>
               <Route path='/updateCourse/:id' element={<UpdateCoursePage/>}/>
               <Route path='/enrollments' element={<EnrollmentsPage/>}/>
+              <Route path='/manage-courses' element={<ManageCoursePage/>}/>
+              <Route path='/manage-users' element={<ManageUserPage/>}/>
+              <Route path='/all-users' element={<ViewallUsersPage/>}/>
+              <Route path='/all-instructors' element={<ViewallInstructorsPage/>}/>
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
             </Routes>
           <Footer/>
