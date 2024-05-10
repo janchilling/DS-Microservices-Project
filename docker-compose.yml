@@ -14,7 +14,7 @@ services:
       context: ./api-gateway
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8800:8800"
     depends_on:
       - payment-management-service
       - user-management-service

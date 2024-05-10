@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose port 8000 to the outside world
-EXPOSE 8000
+EXPOSE 8800
 
 # Command to run the gateway service
 CMD ["npm", "run", "dev"]
