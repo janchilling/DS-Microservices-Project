@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 import illustrationIntro from '../../images/home.png';
 
 const Main = () => {

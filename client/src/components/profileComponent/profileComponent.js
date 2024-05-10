@@ -6,15 +6,17 @@ import useFetchUserDetails from '../../hooks/useUserDetails';
 import useFetchInstructorDetails from '../../hooks/useinstructorDetails';
 import EditProfileForm from '../editProfileComponent/editProfile';
 import useEditUserDetails from '../../hooks/useEditUserDetails';
+import useDeleteUser from '../../hooks/useUserDelete';
 
 const Profile = () => {
 
     const params = useParams();
     const userId = params.id;
-    const { user } = useContext(UserContext);
+    const { user,setUser } = useContext(UserContext);
     const { studentData } = useFetchUserDetails(userId);
     const { instructorData } = useFetchInstructorDetails(userId);
-    const { isEditing, toggleEditing } = useEditUserDetails()
+    const { onDeleteUser } = useDeleteUser();
+    const { isEditing, toggleEditing } = useEditUserDetails();
 
     // Function to render name based on user type
     const renderUserName = () => {
@@ -40,6 +42,19 @@ const Profile = () => {
         }
     };
 
+    // Function to delete a user
+    const handleDeleteUser = async (id) => {
+        const isDeleted = await onDeleteUser(id);
+        if (isDeleted) {
+            alert("Student has been deleted successfully!");
+            setUser(null);
+            localStorage.removeItem("user")
+            window.location.href = '/';
+        } else {
+            alert("Error with student deletion, please try again later...");
+        }
+    }
+
     return (
         <div className="font-sans antialiased leading-normal tracking-wider text-gray-900">
             {/* Background Gradient */}
@@ -53,7 +68,7 @@ const Profile = () => {
                                 <EditProfileForm user={user} onCancel={toggleEditing}/>
                             ) : (
                                 <>
-                                <div className="block w-48 h-48 mx-auto -mt-16 bg-center bg-cover rounded-full shadow-xl lg:hidden" style={{backgroundImage: "url('https://source.unsplash.com/MP0IUfwrn0A')"}}></div>
+                                <div className="block w-48 h-48 mx-auto -mt-16 bg-center bg-cover rounded-full shadow-xl lg:hidden" style={{backgroundImage: `url(${userimg})`}}></div>
                             <h1 className="pt-8 text-3xl font-bold lg:pt-0">{renderUserName()}</h1>
                             <div className="w-4/5 pt-3 mx-auto border-b-2 border-green-500 opacity-25 lg:mx-0"></div>
                             <p className="flex items-center justify-center pt-4 text-base font-bold lg:justify-start">
@@ -71,7 +86,7 @@ const Profile = () => {
                                 <button onClick={toggleEditing} className="px-4 py-2 font-bold text-white bg-green-700 rounded-full hover:bg-green-900">
                                     Edit Profile
                                 </button>
-                                <button className="px-4 py-2 font-bold text-white bg-red-700 rounded-full hover:bg-red-900">
+                                <button onClick={() => handleDeleteUser(user._id)} className="px-4 py-2 font-bold text-white bg-red-700 rounded-full hover:bg-red-900">
                                     Delete Profile
                                 </button>
                             </div>
