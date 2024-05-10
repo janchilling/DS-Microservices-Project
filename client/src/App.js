@@ -13,6 +13,9 @@ import LoginComponent from './auth/components/loginComponent/loginComponent';
 
 // Instructor Components
 import CreateCoursePage from './pages/createCoursePage/createCoursePage';
+import GetCoursesByUserPage from './pages/getCoursesByUserPage/getCoursesByUserPage';
+import GetCourseByIdPage from './pages/getCourseByIdPage/getCourseByIdPage';
+import UpdateCoursePage from './pages/updateCoursePage/updateCoursePage';
 
 import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
@@ -46,6 +49,9 @@ function App() {
               <Route path='/login' element={<LoginComponent/>}/>
               <Route path='/order-summary' element={<OrderSummaryPage/>}/>
               <Route path='/createCourse' element={<CreateCoursePage/>}/>
+              <Route path='/getCourses' element={<GetCoursesByUserPage/>}/>
+              <Route path='/viewCourse/:id' element={<GetCourseByIdPage/>}/>
+              <Route path='/updateCourse/:id' element={<UpdateCoursePage/>}/>
               <Route path='/enrollments' element={<EnrollmentsPage/>}/>
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
               <Route path='/send-email' element={<EmailFormPage/>}/>

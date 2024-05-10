@@ -21,7 +21,7 @@ const Main = () => {
                     <div className="flex justify-center md:justify-start">
                         <div className="mr-2">
                             <Link
-                                to="#"
+                                to="/getCourses"
                                 className="p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400"
                             >
                                 Check your Courses
@@ -29,7 +29,7 @@ const Main = () => {
                         </div>
                         <div>
                             <Link
-                                to="#"
+                                to="/createCourse"
                                 className="p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400"
                             >
                                 Create a new Course

@@ -1,7 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const cors = require('cors');
 require("dotenv").config();
+
+// Allow requests from localhost:3000
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 const databaseConnection = require('./config/database');
 

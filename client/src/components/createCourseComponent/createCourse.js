@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../createCourseComponent/createCourse.css";
 import useCreateCourse from "../../hooks/useCreateCourse";
+import UserContext from "../../ContextComponent/ContextComponent";
 
 export default function CreateCourse() {
+
+    const { user } = useContext(UserContext);
+    const userId = user._id;
 
     const { createCourse } = useCreateCourse();
 
@@ -18,7 +22,11 @@ export default function CreateCourse() {
         console.log("hello");
         e.preventDefault();
         try {
-            await createCourse(courseName, courseCode, description, instructor, price, image, duration);
+            await createCourse(userId,courseName, courseCode, description, instructor, price, image, duration);
+
+            if(createCourse){
+                window.location.href = `/getCourses`;
+            }
         } catch (error) {
             alert(error);
         }
