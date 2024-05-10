@@ -16,7 +16,7 @@ const CourseList = () => {
     }, [])
 
     const getCourses = async () => {
-        const response = await axios.get(`http://localhost:8000/CourseManagementService/course/getAllCourses/${userId}`);
+        const response = await axios.get(`http://localhost:8800/CourseManagementService/course/getAllCourses/${userId}`);
 
         if (response.status === 200) {
             setData(response.data);

@@ -8,7 +8,7 @@ const useViewCourseById = () => {
 
     const viewOneCourseById = async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8000/CourseManagementService/course/getCourse/${id}`);
+            const response = await axios.get(`http://localhost:8800/CourseManagementService/course/getCourse/${id}`);
             setCourse(response.data.course);
             setLoading(false);
         } catch (error) {

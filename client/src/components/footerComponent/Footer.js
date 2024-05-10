@@ -8,6 +8,13 @@ import pinterestLogo from '../../images/icon-pinterest.svg';
 import instagramLogo from '../../images/icon-instagram.svg';
 
 const Footer = () => {
+
+  // Scroll to hero component
+  const scrollToHero = () => {
+    const heroComponent = document.getElementById('hero');
+    heroComponent.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className='bg-black '>
       {/* Flex Container */}
@@ -18,9 +25,11 @@ const Footer = () => {
             Copyright © 2022, All Rights Reserved
           </div>
           {/* Logo */}
-          <div>
-            <img src={companyLogoWhite} className='h-8' alt='' />
-          </div>
+          <Link to='#' onClick={scrollToHero}>
+            <div>
+              <img src={companyLogoWhite} className='h-8' alt='' />
+            </div>
+          </Link>
           {/* Social Links Container */}
           <div className='flex justify-center space-x-4'>
             {/* Link 1 */}
