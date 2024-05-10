@@ -52,7 +52,7 @@ const Testimonial = () => {
         </div>
         <div className='my-16'>
           <Link
-            to='/register'
+            to='/all-Courses'
             className='p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400'
           >
             Get Started

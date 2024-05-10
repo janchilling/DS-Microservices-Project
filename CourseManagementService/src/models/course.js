@@ -34,6 +34,10 @@ const courseSchema = new Schema({
     Duration: {
         type: Number,
         required: true
+    },
+    VideoLink: {
+        type: String,
+        required: true
     }
 
 })

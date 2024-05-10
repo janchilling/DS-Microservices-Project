@@ -1,8 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useViewCourseById from "../../hooks/useViewCourseById";
 import UserContext from "../../ContextComponent/ContextComponent";
-import "../getCourseByIdComponent/getCourseById.css";
 
 function ViewCourse() {
     const { user } = useContext(UserContext);

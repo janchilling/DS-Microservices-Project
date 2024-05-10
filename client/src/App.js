@@ -16,6 +16,8 @@ import CreateCoursePage from './pages/createCoursePage/createCoursePage';
 import GetCoursesByUserPage from './pages/getCoursesByUserPage/getCoursesByUserPage';
 import GetCourseByIdPage from './pages/getCourseByIdPage/getCourseByIdPage';
 import UpdateCoursePage from './pages/updateCoursePage/updateCoursePage';
+import ViewAllCourses from './pages/viewAllCoursesPage/viewAllCoursesPage';
+import BoughtCoursePage from './pages/boughtCoursePage/boughtCoursePage';
 
 // Admin Components
 import ManageCoursePage from './pages/manageCoursePage/manageCoursePage';
@@ -67,6 +69,9 @@ function App() {
               <Route path='/all-users' element={<ViewallUsersPage/>}/>
               <Route path='/all-instructors' element={<ViewallInstructorsPage/>}/>
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
+              <Route path='/all-Courses' element={<ViewAllCourses/>}/>
+              <Route path='/coursePage/:id' element={<BoughtCoursePage/>}/>
+
             </Routes>
           <Footer/>
         </UserContext.Provider>
