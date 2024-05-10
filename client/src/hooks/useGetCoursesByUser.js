@@ -7,7 +7,7 @@ const useGetCoursesByUser = () => {
     useEffect(() => {
         const getCourses = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/CourseManagementService/course/getAllCourses/${userID}`);
+                const response = await axios.get(`http://localhost:8800/CourseManagementService/course/getAllCourses/${userID}`);
                 if (response.status === 200){
                     const coursesWithData = await Promise.all(response.data.map(async course => {
                         try {

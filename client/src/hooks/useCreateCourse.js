@@ -31,7 +31,7 @@ const useCreateCourse = () => {
 
             // Send course data along with image URL
             const response = await axios.post(
-                "http://localhost:8000/CourseManagementService/course/addCourse",
+                "http://localhost:8800/CourseManagementService/course/addCourse",
                 {
                     UserId,
                     CourseName,

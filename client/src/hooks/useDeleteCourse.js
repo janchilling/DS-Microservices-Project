@@ -5,7 +5,7 @@ const useDeleteCourse = () => {
         try {
             console.log(id);
             if (window.confirm("Are you sure that you want to delete this course?")) {
-                const response = await axios.delete(`http://localhost:8000/CourseManagementService/course/deleteCourse/${id}`);
+                const response = await axios.delete(`http://localhost:8800/CourseManagementService/course/deleteCourse/${id}`);
                 console.log(response);
                 if (response.status === 200) {
                     alert("Course deleted!");

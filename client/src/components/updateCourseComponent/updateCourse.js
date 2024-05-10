@@ -19,7 +19,7 @@ export default function UpdateCourse() {
     }, [])
 
     const getCourseDetails = async () => {
-        let result = await fetch(`http://localhost:8000/CourseManagementService/course/getCourse/${params.id}`);
+        let result = await fetch(`http://localhost:8800/CourseManagementService/course/getCourse/${params.id}`);
         result = await result.json();
 
         setCourseName(result.course.CourseName);
@@ -32,7 +32,7 @@ export default function UpdateCourse() {
     }
 
     const updateCourseDetails = async () => {
-        let result = await fetch(`http://localhost:8000/CourseManagementService/course/updateCourse/${params.id}`, {
+        let result = await fetch(`http://localhost:8800/CourseManagementService/course/updateCourse/${params.id}`, {
             method: 'Put',
             body: JSON.stringify({ CourseName, CourseCode, Description, Instructor, Price, Duration, Image }),
             headers: {
