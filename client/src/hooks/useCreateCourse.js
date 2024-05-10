@@ -9,6 +9,7 @@ const storage = getStorage(app); // Initialize storage with the Firebase app
 
 const useCreateCourse = () => {
     const createCourse = async (
+        UserId,
         CourseName,
         CourseCode,
         Description,
@@ -32,6 +33,7 @@ const useCreateCourse = () => {
             const response = await axios.post(
                 "http://localhost:8000/CourseManagementService/course/addCourse",
                 {
+                    UserId,
                     CourseName,
                     CourseCode,
                     Description,

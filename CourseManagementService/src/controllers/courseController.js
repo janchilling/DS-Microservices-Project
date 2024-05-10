@@ -2,10 +2,11 @@ let Course = require("../models/course");
 const authenticateRole = require("../middleware/authenticationRole");
 
 //create new course
-const createCourse = async(req, res) => {
-    const { CourseName, CourseCode, Description, Instructor, Price, Image, Duration } = req.body;
+const createCourse = async (req, res) => {
+    const { UserId, CourseName, CourseCode, Description, Instructor, Price, Image, Duration } = req.body;
 
     const newCourse = new Course({
+        UserId,
         CourseName,
         CourseCode,
         Description,
@@ -14,44 +15,44 @@ const createCourse = async(req, res) => {
         Image,
         Duration
     })
+    //validations
+    if (Price <= 0 || !Price === 'number') {
+        return res.status(400).json({ message: 'Price must be a positive number!' })
+    }
+    if (!CourseName || !CourseCode || !Description || !Instructor || !Price || !Image || !Duration) {
+        return res.status(400).json({ message: 'All fields are required!' })
+    }
 
     newCourse.save().then(() => {
-        //validations
-        if(price <= 0 || !Price === 'num')
-
-            res.json("Course made successfully")
+        res.json("Course made successfully")
     }).catch((err) => {
         console.log(err);
     })
 
 }
 
-//view all courses
-const getAllCourses = async (req, res) => {
+//view all courses by userId
+const getAllCoursesByUserId = async (req, res) => {
+    const UserId = req.params.id;
+
     try {
-        const courses = await Course.find();
-
-        // Map each course to include the image URL
-        const coursesWithImageUrls = courses.map(course => {
-            return {
-                _id: course._id,
-                CourseName: course.CourseName,
-                CourseCode: course.CourseCode,
-                Description: course.Description,
-                Instructor: course.Instructor,
-                Price: course.Price,
-                ImageUrl: course.ImageUrl,
-                Duration: course.Duration
-            };
-        });
-
-        res.json(coursesWithImageUrls);
+        const courses = await Course.find({ UserId: UserId });
+        res.json(courses);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: 'Error fetching courses' });
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
+//view all courses
+const getAllCourses = async (req, res) => {
+    try{
+        const courses = await Course.find();
+        res.json(courses);
+    }catch(error){
+        res.status(500).json({error: "Internal Server Error"});
+    }
+}
 
 //update a course by id
 const updateCourse = async (req, res) => {
@@ -117,10 +118,11 @@ const searchCourse =
             ]
         });
         resp.send(result);
-}
+    }
 
 module.exports = {
     createCourse,
+    getAllCoursesByUserId,
     getAllCourses,
     updateCourse,
     deleteCourse,
