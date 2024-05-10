@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 app.use("/UserManagementService", proxy("http://localhost:3001"));
 app.use("/CourseManagementService", proxy("http://localhost:3002"));
 app.use("/PaymentManagementService", proxy("http://localhost:3003"));
-app.use("/EnrollmentManagementService", proxy("http://localhost:3003"));
+app.use("/EnrollmentManagementService", proxy("http://localhost:3004"));
 
 // Start the API Gateway
 const PORT = process.env.PORT || 8800;
