@@ -12,7 +12,7 @@ const usePayment = () => {
 
         try {
             const response = await axios.post(
-                "http://localhost:8000/PaymentManagementService/checkout/create-checkout-session",
+                "http://localhost:8800/PaymentManagementService/checkout/create-checkout-session",
                 body,
                 { headers }
             );
