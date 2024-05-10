@@ -19,6 +19,7 @@ import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
 import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
+import EmailFormPage from "./pages/emailFormPage/emailFormPage";
  
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
               <Route path='/createCourse' element={<CreateCoursePage/>}/>
               <Route path='/enrollments' element={<EnrollmentsPage/>}/>
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
+              <Route path='/send-email' element={<EmailFormPage/>}/>
             </Routes>
           <Footer/>
         </UserContext.Provider>
