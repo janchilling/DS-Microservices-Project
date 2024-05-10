@@ -1,7 +1,7 @@
 const Admin = require('../models/admin');
 const Student = require('../models/student');
 const Instructor = require('../models/instructor');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // Checking whether the same email has been used in each userType
