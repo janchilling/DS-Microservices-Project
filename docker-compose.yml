@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+
+  client-service:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8800:8800"
+    depends_on:
+      - payment-management-service
+      - user-management-service
+      - course-management-service
+      - client-service
+
+  user-management-service:
+    build:
+      context: ./UserManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+
+  course-management-service:
+    build:
+      context: ./CourseManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - user-management-service
+
+  payment-management-service:
+    build:
+      context: ./PaymentManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    depends_on:
+      - user-management-service
+
+  enrollment-management-service:
+    build:
+      context: ./EnrollmentManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    depends_on:
+      - user-management-service
+
+

@@ -13,6 +13,9 @@ import LoginComponent from './auth/components/loginComponent/loginComponent';
 
 // Instructor Components
 import CreateCoursePage from './pages/createCoursePage/createCoursePage';
+import GetCoursesByUserPage from './pages/getCoursesByUserPage/getCoursesByUserPage';
+import GetCourseByIdPage from './pages/getCourseByIdPage/getCourseByIdPage';
+import UpdateCoursePage from './pages/updateCoursePage/updateCoursePage';
 
 // Admin Components
 import ManageCoursePage from './pages/manageCoursePage/manageCoursePage';
@@ -25,6 +28,7 @@ import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 import Profile from './pages/profilePage/profilePage';
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
+import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
  
 function App() {
 
@@ -52,11 +56,15 @@ function App() {
               <Route path='/profile/:id' element={<Profile/>}/>
               <Route path='/order-summary' element={<OrderSummaryPage/>}/>
               <Route path='/createCourse' element={<CreateCoursePage/>}/>
+              <Route path='/getCourses' element={<GetCoursesByUserPage/>}/>
+              <Route path='/viewCourse/:id' element={<GetCourseByIdPage/>}/>
+              <Route path='/updateCourse/:id' element={<UpdateCoursePage/>}/>
               <Route path='/enrollments' element={<EnrollmentsPage/>}/>
               <Route path='/manage-courses' element={<ManageCoursePage/>}/>
               <Route path='/manage-users' element={<ManageUserPage/>}/>
               <Route path='/all-users' element={<ViewallUsersPage/>}/>
               <Route path='/all-instructors' element={<ViewallInstructorsPage/>}/>
+              <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
             </Routes>
           <Footer/>
         </UserContext.Provider>

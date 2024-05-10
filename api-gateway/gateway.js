@@ -1,6 +1,7 @@
 const express = require("express");
-const proxy = require("express-http-proxy");
-const cors = require('cors');
+const proxy = require("express-http-proxy")
+const cors = require("cors");
+
 const app = express();
 
 app.use(cors());
@@ -16,13 +17,14 @@ app.use((req, res, next) => {
     next();
 });
 
-// Proxy requests to different services
-app.use("/api/payment", proxy("http://payment-management-service:3003"));
+// Proxy requests to different service
 app.use("/UserManagementService", proxy("http://localhost:3001"));
 app.use("/CourseManagementService", proxy("http://localhost:3002"));
+app.use("/PaymentManagementService", proxy("http://localhost:3003"));
+app.use("/EnrollmentManagementService", proxy("http://localhost:3004"));
 
 // Start the API Gateway
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8800;
 app.listen(PORT, () => {
     console.log(`Gateway is Listening to Port ${PORT}`);
 });

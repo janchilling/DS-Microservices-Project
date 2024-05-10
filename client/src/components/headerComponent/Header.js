@@ -60,14 +60,14 @@ const Navbar = () => {
           {/* Menu Items */}
           <div className='hidden space-x-16 md:flex'>
             {isInstructor ? (
-                <>
-                  <Link to='#' className='hover:text-gray-400'>
-                    Create Course
-                  </Link>
-                  <Link to='#' className='hover:text-gray-400'>
-                    Your Courses
-                  </Link>
-                </>
+              <>
+                <Link to='/createCourse' className='hover:text-gray-400'>
+                  Create Course
+                </Link>
+                <Link to='/getCourses' className='hover:text-gray-400'>
+                  Your Courses
+                </Link>
+            </>
             ) : (
               <>
                   {isAdmin ? (
