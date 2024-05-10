@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 require("dotenv").config();
 
-const databaseConnection = require('./src/config/database.js');
+const databaseConnection = require('./config/database.js');
 
 //Initializing the port number
 const PORT = process.env.PORT || 3004;
@@ -19,5 +19,5 @@ app.listen(PORT, () => {
 })
 
 //implementation of the the course route
-const enrollmentRouter = require("./src/routes/enrollment.js");
+const enrollmentRouter = require("./routes/enrollment.js");
 app.use("/enrollment", enrollmentRouter);
