@@ -9,7 +9,7 @@ const useFetchInstructorDetails = (userId, searchTerm) => {
     useEffect(() => {
         const fetchInstructorDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/UserManagementService/instructor/get/${userId}`);
+                const response = await axios.get(`http://localhost:8800/UserManagementService/instructor/get/${userId}`);
                 if (response.status === 200) {
                     setInstructorData(response.data);
                 }
@@ -23,9 +23,9 @@ const useFetchInstructorDetails = (userId, searchTerm) => {
     useEffect(() => {
         const fetchallInstructorDetails = async () => {
             try {
-                let url = 'http://localhost:8000/UserManagementService/instructor';
+                let url = 'http://localhost:8800/UserManagementService/instructor';
                 if (searchTerm) {
-                    url = `http://localhost:8000/UserManagementService/instructor/search/${searchTerm}`;
+                    url = `http://localhost:8800/UserManagementService/instructor/search/${searchTerm}`;
                 }
                 const responses = await axios.get(url);
                 if (responses.status === 200) {

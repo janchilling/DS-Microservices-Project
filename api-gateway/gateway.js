@@ -1,8 +1,9 @@
 const express = require("express");
 const proxy = require("express-http-proxy");
-
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 // Set up CORS

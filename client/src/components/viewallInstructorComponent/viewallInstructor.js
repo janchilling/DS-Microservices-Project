@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../../ContextComponent/ContextComponent';
 import useFetchInstructorDetails from '../../hooks/useinstructorDetails';
+import useDeleteInstructor from '../../hooks/useInstructorDelete';
 
 const ViewallInstructors = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const { user } = useContext(UserContext);
     const { instructorallData } = useFetchInstructorDetails(user._id, searchTerm);
+    const { onDeleteInstructor } = useDeleteInstructor();
     const [filteredInstructors, setFilteredInstructors] = useState([]);
 
     useEffect(() => {
@@ -18,10 +20,15 @@ const ViewallInstructors = () => {
     }, [searchTerm, instructorallData]);
 
     // Function to delete a user
-    const deleteUser = (userId) => {
-        // Implement your delete logic here
-    };
-
+    const handleDeleteInstructor = async (instructorallData) => {
+        const isDeleted = await onDeleteInstructor(instructorallData._id);
+        if (isDeleted) {
+            alert("Instructor has been deleted successfully!");
+            window.location.href = '/all-instructors';
+        } else {
+            alert("Error with instructor deletion, please try again later...");
+        }
+    }
     // Breadcrumbs component
     const Breadcrumbs = () => {
         return (
@@ -52,7 +59,7 @@ const ViewallInstructors = () => {
     };
 
     return (
-        <div className="container mx-auto mt-4 mb-16 px-16">
+        <div className="container px-16 mx-auto mt-4 mb-16">
             <Breadcrumbs/>
             <h1 className="mb-4 text-3xl font-bold text-orange-500">All Instructors</h1>
             <input
@@ -71,12 +78,13 @@ const ViewallInstructors = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {instructorallData && instructorallData.map(user => (
-                        <tr>
-                            <td className="px-4 py-2 border">{user.Instructorname}</td>
-                            <td className="px-4 py-2 border">{user.Email}</td>
+                    {instructorallData && instructorallData.map((item, index) => (
+                        <tr key={index}>
+                            <td className="px-4 py-2 border">{item.Instructorname}</td>
+                            <td className="px-4 py-2 border">{item.Email}</td>
                             <td className="px-4 py-2 text-center border">
                                 <button
+                                    onClick={() => handleDeleteInstructor(item)}
                                     className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"   
                                 >
                                     Delete

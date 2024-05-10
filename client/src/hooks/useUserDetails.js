@@ -8,7 +8,7 @@ const useFetchUserDetails = (userId, searchTerm) => {
     useEffect(() => {
         const fetchUserDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/UserManagementService/student/get/${userId}`);
+                const response = await axios.get(`http://localhost:8800/UserManagementService/student/get/${userId}`);
                 if (response.status === 200) {
                     setStudentData(response.data);
                 }
@@ -22,9 +22,9 @@ const useFetchUserDetails = (userId, searchTerm) => {
     useEffect(() => {
         const fetchallUserDetails = async () => {
             try {
-                let url = 'http://localhost:8000/UserManagementService/student';
+                let url = 'http://localhost:8800/UserManagementService/student';
                 if (searchTerm) {
-                    url = `http://localhost:8000/UserManagementService/student/search/${searchTerm}`;
+                    url = `http://localhost:8800/UserManagementService/student/search/${searchTerm}`;
                 }
                 const response = await axios.get(url);
                 if (response.status === 200) {
@@ -37,19 +37,7 @@ const useFetchUserDetails = (userId, searchTerm) => {
         fetchallUserDetails();
     }, [searchTerm]);
 
-    const deleteUser = async (userId) => {
-        try {
-            const response = await axios.delete(`http://localhost:8000/UserManagementService/student/delete/${userId}`);
-            if (response.status === 200) {
-                // Reload page after successful deletion
-                window.location.reload();
-            }
-        } catch (error) {
-            alert(error);
-        }
-    };
-
-    return { studentData, studentallData, deleteUser };
+    return { studentData, studentallData };
 };
 
 export default useFetchUserDetails;
