@@ -1,9 +1,14 @@
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import avatarAnisha from '../../images/avatar-anisha.png';
 import avatarAli from '../../images/avatar-ali.png';
 import avatarRichard from '../../images/avatar-richard.png';
+import UserContext from '../../ContextComponent/ContextComponent';
 
 const Testimonial = () => {
+
+  const { user } = useContext(UserContext);
+
   return (
     <section id='testimonials'>
       <div className='max-w-6xl px-5 mx-auto mt-32 text-center'>
@@ -51,12 +56,21 @@ const Testimonial = () => {
           </div>
         </div>
         <div className='my-16'>
-          <Link
-            to='/all-Courses'
-            className='p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400'
-          >
-            Get Started
-          </Link>
+          { user ? (
+            <Link
+              to='/all-Courses'
+              className='p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400'
+            >
+              Get Started
+            </Link>
+          ) : (
+              <Link
+              to='/register'
+              className='p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400'
+            >
+              Get Started
+            </Link>
+          )}
         </div>
       </div>
     </section>
