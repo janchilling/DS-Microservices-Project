@@ -3,6 +3,7 @@ const router = require("express").Router();
 
 const {
     createCourse,
+    getAllCoursesByUserId,
     getAllCourses,
     updateCourse,
     deleteCourse,
@@ -13,8 +14,11 @@ const {
 //create new course
 router.post("/addCourse", createCourse);
 
+//view all courses by user id
+router.get("/getAllCourses/:id", getAllCoursesByUserId);
+
 //view all courses
-router.get("/", getAllCourses);
+router.get("/publishedCourses", getAllCourses);
 
 //update a course by id
 router.put("/updateCourse/:id", updateCourse);
