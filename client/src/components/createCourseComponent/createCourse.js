@@ -17,12 +17,13 @@ export default function CreateCourse() {
     const [price, setPrice] = useState("");
     const [image, setImage] = useState(null);
     const [duration, setDuration] = useState("");
+    const [link, setLink] = useState("");
 
     const submitCourse = async (e) => {
         console.log("hello");
         e.preventDefault();
         try {
-            await createCourse(userId,courseName, courseCode, description, instructor, price, image, duration);
+            await createCourse(userId,courseName, courseCode, description, instructor, price, image, duration, link);
 
             if(createCourse){
                 window.location.href = `/getCourses`;
@@ -61,6 +62,12 @@ export default function CreateCourse() {
                                     <label htmlFor="instructor" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instructor Name</label>
                                     <input type="text" name="coursecode" id="coursecode" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter the course instructor's name" onChange={(e) => {
                                         setInstructor(e.target.value);
+                                    }} required />
+                                </div>
+                                <div>
+                                    <label htmlFor="instructor" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course Video Link</label>
+                                    <input type="text" name="coursecode" id="coursecode" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter the course link" onChange={(e) => {
+                                        setLink(e.target.value);
                                     }} required />
                                 </div>
                                 <div className="flex justify-between">

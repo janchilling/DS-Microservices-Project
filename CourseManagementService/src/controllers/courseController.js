@@ -3,7 +3,7 @@ const authenticateRole = require("../middleware/authenticationRole");
 
 //create new course
 const createCourse = async (req, res) => {
-    const { UserId, CourseName, CourseCode, Description, Instructor, Price, Image, Duration } = req.body;
+    const { UserId, CourseName, CourseCode, Description, Instructor, Price, Image, Duration, VideoLink } = req.body;
 
     const newCourse = new Course({
         UserId,
@@ -13,13 +13,14 @@ const createCourse = async (req, res) => {
         Instructor,
         Price,
         Image,
-        Duration
+        Duration,
+        VideoLink
     })
     //validations
     if (Price <= 0 || !Price === 'number') {
         return res.status(400).json({ message: 'Price must be a positive number!' })
     }
-    if (!CourseName || !CourseCode || !Description || !Instructor || !Price || !Image || !Duration) {
+    if (!CourseName || !CourseCode || !Description || !Instructor || !Price || !Image || !Duration || !VideoLink) {
         return res.status(400).json({ message: 'All fields are required!' })
     }
 
@@ -57,7 +58,7 @@ const getAllCourses = async (req, res) => {
 //update a course by id
 const updateCourse = async (req, res) => {
     let courseId = req.params.id;
-    const { CourseName, CourseCode, Description, Instructor, Price, Duration } = req.body;
+    const { CourseName, CourseCode, Description, Instructor, Price, Duration, VideoLink } = req.body;
 
     const updateCourse = {
         CourseName,
@@ -65,7 +66,8 @@ const updateCourse = async (req, res) => {
         Description,
         Instructor,
         Price,
-        Duration
+        Duration,
+        VideoLink
     }
 
     const update = await Course.findByIdAndUpdate(courseId, updateCourse).then(() => {

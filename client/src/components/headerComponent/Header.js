@@ -84,8 +84,8 @@ const Navbar = () => {
                         <Link to='/' className='hover:text-gray-400'>
                           Home
                         </Link>
-                        <Link to='' onClick={scrollToFeatures} className='hover:text-gray-400'>
-                          Popular Courses
+                        <Link to='/all-Courses' onClick={scrollToFeatures} className='hover:text-gray-400'>
+                          Courses
                         </Link>
                         <Link to='' onClick={scrollToTestimonials}  className='hover:text-gray-400'>
                           Achievements
