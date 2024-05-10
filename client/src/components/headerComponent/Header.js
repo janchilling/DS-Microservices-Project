@@ -7,7 +7,7 @@ import useAuth from '../../auth/config/hooks/authContext';
 const Navbar = () => {
   
   const [toggleMenu, setToggleMenu] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { logout } = useAuth();
 
   // Logout function
@@ -52,55 +52,110 @@ const Navbar = () => {
         {/* Flex Container */}
         <div className='flex items-center justify-between'>
           {/* Logo */}
-          <div className='pt-2'>
-            <Link to='/'>
-              <img src={companyLogo} alt='' />
-            </Link>
-          </div>
-          {/* Menu Items */}
-          <div className='hidden space-x-16 md:flex'>
-            {isInstructor ? (
-              <>
-                <Link to='/createCourse' className='hover:text-gray-400'>
-                  Create Course
+          { user ? (
+            <>
+              <div className='pt-2'>
+                <Link to='/home'>
+                  <img src={companyLogo} alt='' />
                 </Link>
-                <Link to='/getCourses' className='hover:text-gray-400'>
-                  Your Courses
-                </Link>
+              </div>
+              <div className='hidden space-x-16 md:flex'>
+                {isInstructor ? (
+                  <>
+                    <Link to='/createCourse' className='hover:text-gray-400'>
+                      Create Course
+                    </Link>
+                    <Link to='/getCourses' className='hover:text-gray-400'>
+                      Your Courses
+                    </Link>
+                </>
+                ) : (
+                  <>
+                      {isAdmin ? (
+                        <>
+                            <Link to='/manage-courses' className='hover:text-gray-400'>
+                              Manage all Courses
+                            </Link>
+                            <Link to='/manage-users' className='hover:text-gray-400'>
+                              Manage all Users
+                            </Link>
+                        </>
+                      ) : (
+                          <>
+                            <Link to='/home' className='hover:text-gray-400'>
+                              Home
+                            </Link>
+                            <Link to='/home' onClick={scrollToFeatures} className='hover:text-gray-400'>
+                              Popular Courses
+                            </Link>
+                            <Link to='/home' onClick={scrollToTestimonials}  className='hover:text-gray-400'>
+                              Achievements
+                            </Link>
+                            <Link to='/home' onClick={scrollToPricing} className='hover:text-gray-400'>
+                              Pricing
+                            </Link>
+                            <Link to='/home' onClick={scrollToPricing} className='hover:text-gray-400'>
+                              About Us
+                            </Link>
+                          </>
+                      )}
+                  </>
+                )}
+              </div>
             </>
-            ) : (
-              <>
-                  {isAdmin ? (
+          ) : (
+            <>
+                <div className='pt-2'>
+                  <Link to='/'>
+                    <img src={companyLogo} alt='' />
+                  </Link>
+                </div>
+                {/* Menu Items */}
+                <div className='hidden space-x-16 md:flex'>
+                  {isInstructor ? (
                     <>
-                        <Link to='/manage-courses' className='hover:text-gray-400'>
-                          Manage all Courses
-                        </Link>
-                        <Link to='/manage-users' className='hover:text-gray-400'>
-                          Manage all Users
-                        </Link>
-                    </>
+                      <Link to='/createCourse' className='hover:text-gray-400'>
+                        Create Course
+                      </Link>
+                      <Link to='/getCourses' className='hover:text-gray-400'>
+                        Your Courses
+                      </Link>
+                  </>
                   ) : (
-                      <>
-                        <Link to='/' className='hover:text-gray-400'>
-                          Home
-                        </Link>
-                        <Link to='' onClick={scrollToFeatures} className='hover:text-gray-400'>
-                          Popular Courses
-                        </Link>
-                        <Link to='' onClick={scrollToTestimonials}  className='hover:text-gray-400'>
-                          Achievements
-                        </Link>
-                        <Link to='' onClick={scrollToPricing} className='hover:text-gray-400'>
-                          Pricing
-                        </Link>
-                        <Link to='' onClick={scrollToPricing} className='hover:text-gray-400'>
-                          About Us
-                        </Link>
-                      </>
+                    <>
+                        {isAdmin ? (
+                          <>
+                              <Link to='/manage-courses' className='hover:text-gray-400'>
+                                Manage all Courses
+                              </Link>
+                              <Link to='/manage-users' className='hover:text-gray-400'>
+                                Manage all Users
+                              </Link>
+                          </>
+                        ) : (
+                            <>
+                              <Link to='/' className='hover:text-gray-400'>
+                                Home
+                              </Link>
+                              <Link to='' onClick={scrollToFeatures} className='hover:text-gray-400'>
+                                Popular Courses
+                              </Link>
+                              <Link to='' onClick={scrollToTestimonials}  className='hover:text-gray-400'>
+                                Achievements
+                              </Link>
+                              <Link to='' onClick={scrollToPricing} className='hover:text-gray-400'>
+                                Pricing
+                              </Link>
+                              <Link to='' onClick={scrollToPricing} className='hover:text-gray-400'>
+                                About Us
+                              </Link>
+                            </>
+                        )}
+                    </>
                   )}
-              </>
-            )}
-          </div>
+                </div>
+            </>
+          )}
           <div className='flex space-x-1'>
             {user ? (
               // Display user's name and logout button

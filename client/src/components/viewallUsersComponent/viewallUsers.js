@@ -36,7 +36,7 @@ const ViewallUsers = () => {
             <nav className="mb-8" aria-label="Breadcrumb">
                 <ol className="flex">
                     <li className="mr-2">
-                        <a href="/" className="text-blue-500 hover:text-blue-700">Home</a>
+                        <a href="/home" className="text-blue-500 hover:text-blue-700">Home</a>
                     </li>
                     <li className="mr-2">
                         <svg className="rtl:rotate-180 w-3.5 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">

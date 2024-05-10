@@ -53,10 +53,10 @@ const useAuth = () => {
             if (response.status === 200) {
                 alert("Login Successfully...!");
                 setUser(response.data.user);
-                navigate('/');
+                navigate('/home');
             } 
         } catch (error) {
-            alert(error);
+            alert("Please Enter Valid Credentials..!");
         }
     }
 

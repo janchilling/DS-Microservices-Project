@@ -23,6 +23,7 @@ import ManageUserPage from './pages/manageUserPage/manageUserPage';
 import ViewallUsersPage from './pages/viewUsersPage/viewUsersPage';
 import ViewallInstructorsPage from './pages/viewInstructorPage/viewInstructorPage';
 
+import Index from './pages/IndexPage/indexPage';
 import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 import Profile from './pages/profilePage/profilePage';
@@ -50,7 +51,8 @@ function App() {
         <UserContext.Provider value={{ user, setUser }}>
           <Header/>
             <Routes>
-              <Route path='' element={<Home/>}/>
+              <Route path='' element={<Index/>}/>
+              <Route path='/home' element={<Home/>}/>
               <Route path='/register' element={<RegisterComponent/>}/>
               <Route path='/login' element={<LoginComponent/>}/>
               <Route path='/profile/:id' element={<Profile/>}/>
