@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema({
 
+    UserId: {
+        type: String,
+        required: true
+    },
     CourseName: {
         type: String,
         required: true
