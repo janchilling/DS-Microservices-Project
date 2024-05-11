@@ -24,17 +24,21 @@ const BoughtCoursePage = () => {
 
     return (
         <div>
-            <h1 className='text-black font-bold text-3xl text-center pb-6'>{data.course.CourseName}</h1>
-            <div className="videoScreenCourse">
-                <VideoComponent videoUrl={videoUrl} />
-            </div>
-            <div>
-                <h2 className='text-black font-bold text-xl text-center pb-2'>Instructor: {data.course.Instructor} | Duration : {data.course.Duration} hrs.</h2>
-                <div className='courseParaDiv text-center bg-orange-500'>
-                    <p>{data.course.Description}</p>
-                </div>
-                <br/>
-            </div>
+            {data.course && (
+                <>
+                    <h1 className='text-black font-bold text-3xl text-center pb-6'>{data.course.CourseName}</h1>
+                    <div className="videoScreenCourse">
+                        <VideoComponent videoUrl={videoUrl} />
+                    </div>
+                    <div>
+                        <h2 className='text-black font-bold text-xl text-center pb-2'>Instructor: {data.course.Instructor} | Duration : {data.course.Duration} hrs.</h2>
+                        <div className='courseParaDiv text-center bg-orange-500'>
+                            <p>{data.course.Description}</p>
+                        </div>
+                        <br/>
+                    </div>
+                </>
+            )}
         </div>
     );
 };

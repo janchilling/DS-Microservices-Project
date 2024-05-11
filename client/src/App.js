@@ -32,6 +32,7 @@ import Profile from './pages/profilePage/profilePage';
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
 import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
+import PaymentConfirmationPage from "./pages/paymentConfirmationPage/paymentConfirmantionPage";
  
 function App() {
 
@@ -71,6 +72,7 @@ function App() {
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
               <Route path='/all-Courses' element={<ViewAllCourses/>}/>
               <Route path='/coursePage/:id' element={<BoughtCoursePage/>}/>
+              <Route path='/confirmationPage' element={<PaymentConfirmationPage/>}/>
 
             </Routes>
           <Footer/>

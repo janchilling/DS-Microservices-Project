@@ -8,7 +8,7 @@ const createEnrollment = async (req, res) => {
         userId,
         courseId,
         enrollmentDate: new Date(), 
-        status: 'pending', // Set the status to 'pending' by default
+        status: 'pending',
         additionalInfo
     });
 
