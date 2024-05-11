@@ -27,5 +27,8 @@ mongoose.connect(URL).then(() => {
 const checkoutRoutes = require("./routes/checkoutRoutes");
 app.use('/checkout', checkoutRoutes);
 
+const paymentRoutes = require("./routes/paymentRoutes");
+app.use('/payment', paymentRoutes);
+
 
 
