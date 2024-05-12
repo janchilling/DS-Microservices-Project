@@ -16,6 +16,8 @@ import CreateCoursePage from './pages/createCoursePage/createCoursePage';
 import GetCoursesByUserPage from './pages/getCoursesByUserPage/getCoursesByUserPage';
 import GetCourseByIdPage from './pages/getCourseByIdPage/getCourseByIdPage';
 import UpdateCoursePage from './pages/updateCoursePage/updateCoursePage';
+import ViewAllCourses from './pages/viewAllCoursesPage/viewAllCoursesPage';
+import BoughtCoursePage from './pages/boughtCoursePage/boughtCoursePage';
 
 // Admin Components
 import ManageCoursePage from './pages/manageCoursePage/manageCoursePage';
@@ -23,13 +25,16 @@ import ManageUserPage from './pages/manageUserPage/manageUserPage';
 import ViewallUsersPage from './pages/viewUsersPage/viewUsersPage';
 import ViewallInstructorsPage from './pages/viewInstructorPage/viewInstructorPage';
 
+import Index from './pages/IndexPage/indexPage';
 import Home from './pages/homePage/homePage';
 import OrderSummaryPage from "./pages/orderSummaryPage/orderSummaryPage";
 import Profile from './pages/profilePage/profilePage';
 
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
 import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
+import PaymentConfirmationPage from "./pages/paymentConfirmationPage/paymentConfirmantionPage";
 import EmailFormPage from "./pages/emailFormPage/emailFormPage";
+
  
 function App() {
 
@@ -51,7 +56,8 @@ function App() {
         <UserContext.Provider value={{ user, setUser }}>
           <Header/>
             <Routes>
-              <Route path='' element={<Home/>}/>
+              <Route path='' element={<Index/>}/>
+              <Route path='/home' element={<Home/>}/>
               <Route path='/register' element={<RegisterComponent/>}/>
               <Route path='/login' element={<LoginComponent/>}/>
               <Route path='/profile/:id' element={<Profile/>}/>
@@ -66,7 +72,11 @@ function App() {
               <Route path='/all-users' element={<ViewallUsersPage/>}/>
               <Route path='/all-instructors' element={<ViewallInstructorsPage/>}/>
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
+              <Route path='/all-Courses' element={<ViewAllCourses/>}/>
+              <Route path='/coursePage/:id' element={<BoughtCoursePage/>}/>
+              <Route path='/confirmationPage' element={<PaymentConfirmationPage/>}/>
               <Route path='/send-email' element={<EmailFormPage/>}/>
+
             </Routes>
           <Footer/>
         </UserContext.Provider>

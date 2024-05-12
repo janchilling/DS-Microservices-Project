@@ -11,6 +11,7 @@ export default function UpdateCourse() {
     const [Price, setPrice] = useState("");
     const [Duration, setDuration] = useState("");
     const [Image, setImage] = useState("");
+    const [VideoLink, setVideoLink] = useState("");
 
     const params = useParams();
 
@@ -29,12 +30,13 @@ export default function UpdateCourse() {
         setPrice(result.course.Price);
         setDuration(result.course.Duration);
         setImage(result.course.Image);
+        setVideoLink(result.course.VideoLink);
     }
 
     const updateCourseDetails = async () => {
         let result = await fetch(`http://localhost:8800/CourseManagementService/course/updateCourse/${params.id}`, {
             method: 'Put',
-            body: JSON.stringify({ CourseName, CourseCode, Description, Instructor, Price, Duration, Image }),
+            body: JSON.stringify({ CourseName, CourseCode, Description, Instructor, Price, Duration, Image, VideoLink }),
             headers: {
                 'Content-Type': 'Application/json'
             }
@@ -52,7 +54,7 @@ export default function UpdateCourse() {
     return (
         <div>
             <div className="updateImageDiv">
-                <h1 className="text-center text-white font-bold text-xl pb-2">Course : {CourseName}</h1>
+                <h1 className="text-center text-white font-bold text-xl pb-2">Course :</h1>
                 <img src={Image} className="updateCourseImage" />
             </div>
             <section className="createCourseSection bg-orange-200 rounded-lg">
@@ -82,6 +84,12 @@ export default function UpdateCourse() {
                                     <label htmlFor="instructor" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Instructor Name</label>
                                     <input type="text" name="coursecode" id="coursecode" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter the course instructor's name" value={Instructor} onChange={(e) => {
                                         setInstructor(e.target.value);
+                                    }} required />
+                                </div>
+                                <div>
+                                    <label htmlFor="videolink" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Video Link</label>
+                                    <input type="text" name="coursecode" id="coursecode" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter the course video link" value={VideoLink} onChange={(e) => {
+                                        setVideoLink(e.target.value);
                                     }} required />
                                 </div>
                                 <div className="flex justify-between">

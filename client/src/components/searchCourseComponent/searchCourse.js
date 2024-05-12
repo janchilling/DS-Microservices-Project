@@ -1,15 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import "../searchCourseComponent/searchCourse.css";
-import useManageCourse from '../../hooks/useManageCourse';
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
-    const { courses, searchTerm, searchCourse, deleteCourse } = useManageCourse();
+    const [courses, setCourses] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
 
-    const handleDeleteCourse = async (courseId) => {
-        if (window.confirm("Are you sure you want to delete this course?")) {
-            await deleteCourse(courseId);
+    useEffect(() => {
+        getCourses();
+    }, []);
+
+    const getCourses = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8800/CourseManagementService/course/publishedCourses`);
+            if (response.status === 200) {
+                setCourses(response.data);
+            }
+        } catch (error) {
+            console.error("Error fetching courses:", error);
         }
-    };
+    }
+
+    const searchCourse = async (event) => {
+        let key = event.target.value;
+        setSearchTerm(key);
+        if (key) {
+            try {
+                const result = await fetch(`http://localhost:8800/CourseManagementService/course/searchCourse/${key}`);
+                const data = await result.json();
+                if (data) {
+                    setCourses(data);
+                }
+            } catch (error) {
+                console.error("Error searching courses:", error);
+            }
+        } else {
+            getCourses();
+        }
+    }
+
+    const enrollCourse = (courseId) => {
+        navigate(`/order-summary?courseId=${courseId}`);
+    }
 
     const renderCourses = () => {
         return courses.map((course, index) => (
@@ -24,9 +60,8 @@ const SearchBar = () => {
                         <p className="text-2xl font-bold text-gray-600">{course.Duration} hrs.</p>
                     </div>
                     <div className="button-container">
-                        <button className="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                onClick={() => handleDeleteCourse(course._id)}>
-                            Delete Course
+                        <button onClick={() => enrollCourse(course._id)} className="mt-4 bg-orange-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Enroll Course
                         </button>
                     </div>
 
@@ -46,7 +81,7 @@ const SearchBar = () => {
                         type="text"
                         className="py-2 px-4 pr-12 border border-gray-300 rounded-l focus:outline-none focus:border-blue-500 w-96"
                         placeholder="Search for courses"
-                        onChange={(e) => searchCourse(e.target.value)}
+                        onChange={searchCourse}
                     />
                 </div>
             </div>
