@@ -34,6 +34,7 @@ import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
 import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
 import PaymentConfirmationPage from "./pages/paymentConfirmationPage/paymentConfirmantionPage";
 import EmailFormPage from "./pages/emailFormPage/emailFormPage";
+import AllPaymentsPage from "./pages/allPaymentsPage/allPaymentsPage";
 
  
 function App() {
@@ -72,6 +73,7 @@ function App() {
               <Route path='/all-users' element={<ViewallUsersPage/>}/>
               <Route path='/all-instructors' element={<ViewallInstructorsPage/>}/>
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
+              <Route path='/all-payments' element={<AllPaymentsPage/>}/>
               <Route path='/all-Courses' element={<ViewAllCourses/>}/>
               <Route path='/coursePage/:id' element={<BoughtCoursePage/>}/>
               <Route path='/confirmationPage' element={<PaymentConfirmationPage/>}/>
