@@ -33,6 +33,8 @@ import Profile from './pages/profilePage/profilePage';
 import EnrollmentsPage from "./pages/enrollmentsPage/enrollmentsPage";
 import AllEnrollmentsPage from "./pages/allEnrollmentsPage/allEnrollmentsPage";
 import PaymentConfirmationPage from "./pages/paymentConfirmationPage/paymentConfirmantionPage";
+import EmailFormPage from "./pages/emailFormPage/emailFormPage";
+
  
 function App() {
 
@@ -73,6 +75,7 @@ function App() {
               <Route path='/all-Courses' element={<ViewAllCourses/>}/>
               <Route path='/coursePage/:id' element={<BoughtCoursePage/>}/>
               <Route path='/confirmationPage' element={<PaymentConfirmationPage/>}/>
+              <Route path='/send-email' element={<EmailFormPage/>}/>
 
             </Routes>
           <Footer/>
