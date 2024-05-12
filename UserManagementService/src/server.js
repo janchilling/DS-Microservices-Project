@@ -22,6 +22,10 @@ app.listen(PORT, () => {
 const authRouter = require('./routes/authRoutes');
 app.use('/auth',authRouter);
 
+// admin routes
+const adminRouter = require('./routes/adminRoutes');
+app.use('/admin', adminRouter);
+
 // student routes
 const studentRouter = require('./routes/studentRoutes');
 app.use('/student', studentRouter);

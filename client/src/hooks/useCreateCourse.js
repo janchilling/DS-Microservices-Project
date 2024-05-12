@@ -16,15 +16,15 @@ const useCreateCourse = () => {
         Instructor,
         Price,
         ImageFile,
-        Duration
+        Duration,
+        VideoLink
     ) => {
         try {
-            // Upload image to Firebase Storage
-            const imageFileName = Date.now().toString(); // Use timestamp as file name
+            // Uploading image to Firebase Storage
+            const imageFileName = Date.now().toString();
             const imageRef = ref(storage, `course-images/${imageFileName}`);
             await uploadBytes(imageRef, ImageFile);
 
-            // Get download URL of the uploaded image
             const imageUrl = await getDownloadURL(imageRef);
 
             console.log(imageUrl);
@@ -39,8 +39,9 @@ const useCreateCourse = () => {
                     Description,
                     Instructor,
                     Price,
-                    Image: imageUrl, // Use the download URL of the image
+                    Image: imageUrl,
                     Duration,
+                    VideoLink
                 }
             );
 

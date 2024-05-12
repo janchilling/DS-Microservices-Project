@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
+import useEditUserDetails from '../../hooks/useEditUserDetails';
 
 const EditProfileForm = ({ user, onCancel }) => {
+
+    const initialFullname = user.Type === 'student' ? user.Fullname : user.Instructorname;
+    const { updateUserDetails } = useEditUserDetails();
+
     // State to manage form fields
     const [formData, setFormData] = useState({
-        Fullname: user.Fullname,
+        Fullname: initialFullname,
         Email: user.Email,
     });
 
@@ -19,6 +24,8 @@ const EditProfileForm = ({ user, onCancel }) => {
     // Handler to submit form data
     const handleSubmit = (e) => {
         e.preventDefault();
+        const userId = user._id;
+        updateUserDetails(userId, formData);
         onCancel();
     };
 
@@ -33,7 +40,7 @@ const EditProfileForm = ({ user, onCancel }) => {
                     <input
                         className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="fullname"
-                        name="fullname"
+                        name="Fullname"
                         type="text"
                         value={formData.Fullname}
                         onChange={handleChange}
@@ -46,7 +53,7 @@ const EditProfileForm = ({ user, onCancel }) => {
                     <input
                         className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="email"
-                        name="email"
+                        name="Email"
                         type="email"
                         value={formData.Email}
                         onChange={handleChange}
