@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import axios from 'axios'; // Import Axios
 import useViewStudentById from '../../hooks/useViewStudentByID';
 import useViewCourseById from '../../hooks/useViewCourseById';
+import UserContext from "../../ContextComponent/ContextComponent";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -46,6 +47,7 @@ const AllEnrollments = () => {
   const [enrollments, setEnrollments] = useState([]);
   const { viewSingleStudent } = useViewStudentById();
   const { viewOneCourseById } = useViewCourseById();
+  const { token } = useContext(UserContext);
 
   useEffect(() => {
     // Fetch data when component mounts
@@ -69,17 +71,57 @@ const AllEnrollments = () => {
   const [courseData, setCourseData] = useState({});
 
   useEffect(() => {
-    // Fetch student and course data
-    enrollments.forEach(async (row) => {
+    const fetchData = async () => {
+      const studentRequests = enrollments.map(async (row) => {
+        try {
+          const response = await axios.get(`http://localhost:8800/UserManagementService/student/get/${row.userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}` // Replace token with your token variable
+            }
+          });
+          return { userId: row.userId, data: response.data.student };
+        } catch (error) {
+          console.error('Error fetching student data:', error);
+          return null;
+        }
+      });
+
+      const courseRequests = enrollments.map(async (row) => {
+        try {
+          const response = await axios.get(`http://localhost:8800/CourseManagementService/course/getCourse/${row.courseId}`);
+          return { courseId: row.courseId, data: response.data.course };
+        } catch (error) {
+          console.error('Error fetching course data:', error);
+          return null;
+        }
+      });
+
       try {
-        const studentResponse = await axios.get(`http://localhost:8800/UserManagementService/student/get/${row.userId}`);
-        const courseResponse = await axios.get(`http://localhost:8800/CourseManagementService/course/getCourse/${row.courseId}`);
-        setStudentData(prevState => ({ ...prevState, [row.userId]: studentResponse.data.student }));
-        setCourseData(prevState => ({ ...prevState, [row.courseId]: courseResponse.data.course }));
+        const studentResponses = await Promise.all(studentRequests);
+        const courseResponses = await Promise.all(courseRequests);
+
+        const students = {};
+        studentResponses.forEach((response) => {
+          if (response) {
+            students[response.userId] = response.data;
+          }
+        });
+
+        const courses = {};
+        courseResponses.forEach((response) => {
+          if (response) {
+            courses[response.courseId] = response.data;
+          }
+        });
+
+        setStudentData(students);
+        setCourseData(courses);
       } catch (error) {
         console.error('Error fetching student or course data:', error);
       }
-    });
+    };
+
+    fetchData();
   }, [enrollments]);
 
   const handleStatusChange = async (enrollmentId, newStatus) => {
