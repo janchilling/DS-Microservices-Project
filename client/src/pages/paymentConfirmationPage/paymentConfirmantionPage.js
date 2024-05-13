@@ -49,8 +49,8 @@ export default function PaymentConfirmationPage() {
                 };
                 const sendConfirmEmail = {
                     toEmail: user.Email,
-                    fromName: "MBKT_Institute",
-                    message: "You enrolled to our " + fetchedCourse.CourseName,
+                    fromName: "Manage_Institute",
+                    message: "You enrolled to our " + fetchedCourse.CourseName + " Module",
                 };
                 try {
                     await Promise.all([
