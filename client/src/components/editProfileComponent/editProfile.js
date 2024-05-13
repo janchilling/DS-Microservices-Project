@@ -62,7 +62,7 @@ const EditProfileForm = ({ user, onCancel }) => {
                 {/* Add more form fields as needed */}
                 <div className="flex items-center justify-between">
                     <button
-                        className="px-4 py-2 font-bold text-white bg-green-500 rounded hover:bg-green-700 focus:outline-none focus:shadow-outline"
+                        className="px-4 py-2 font-bold text-white bg-orange-500 rounded hover:bg-orange-700 focus:outline-none focus:shadow-outline"
                         type="submit"
                     >
                         Save

@@ -25,9 +25,9 @@ const Main = () => {
             { user ? (
               <Link
                 to='/all-Courses'
-                className='text-white w-56 h-16 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-bold rounded-lg text-3xl px-5 py-2.5 text-center me-2 mb-2'
+                className='text-white w-64 h-16 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 font-bold rounded-lg text-3xl px-5 py-2.5 text-center me-2 mb-2'
               >
-                Get Started
+                View Courses
               </Link>
             ) : (
               <Link

@@ -6,8 +6,8 @@ import useDeleteInstructor from '../../hooks/useInstructorDelete';
 const ViewallInstructors = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { user } = useContext(UserContext);
-    const { instructorallData } = useFetchInstructorDetails(user._id, searchTerm);
+    const { user} = useContext(UserContext);
+    const { instructorallData } = useFetchInstructorDetails(user?._id, searchTerm);
     const { onDeleteInstructor } = useDeleteInstructor();
     const [filteredInstructors, setFilteredInstructors] = useState([]);
 
