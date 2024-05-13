@@ -3,10 +3,12 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import "../searchCourseComponent/searchCourse.css";
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = () => {
     const [courses, setCourses] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         getCourses();
@@ -41,6 +43,10 @@ const SearchBar = () => {
         }
     }
 
+    const enrollCourse = (courseId) => {
+        navigate(`/order-summary?courseId=${courseId}`);
+    }
+
     const renderCourses = () => {
         return courses.map((course, index) => (
             <div key={index} className="w-1/5 p-4">
@@ -54,7 +60,7 @@ const SearchBar = () => {
                         <p className="text-2xl font-bold text-gray-600">{course.Duration} hrs.</p>
                     </div>
                     <div className="button-container">
-                        <button className="mt-4 bg-orange-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <button onClick={() => enrollCourse(course._id)} className="mt-4 bg-orange-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Enroll Course
                         </button>
                     </div>
