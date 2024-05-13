@@ -79,6 +79,12 @@ const Navbar = () => {
                             <Link to='/manage-users' className='hover:text-gray-400'>
                               Manage all Users
                             </Link>
+                            <Link to='/all-enrollments' className='hover:text-gray-400'>
+                              All Enrollments
+                            </Link>
+                            <Link to='/all-payments' className='hover:text-gray-400'>
+                              All Payments
+                            </Link>
                         </>
                       ) : (
                           <>
@@ -88,8 +94,8 @@ const Navbar = () => {
                             <Link to='/all-Courses' onClick={scrollToFeatures} className='hover:text-gray-400'>
                               Courses
                             </Link>
-                            <Link to='/home' onClick={scrollToTestimonials}  className='hover:text-gray-400'>
-                              Achievements
+                            <Link to='/user-enrollments'  className='hover:text-gray-400'>
+                              My Enrollments
                             </Link>
                             <Link to='/home' onClick={scrollToPricing} className='hover:text-gray-400'>
                               Pricing

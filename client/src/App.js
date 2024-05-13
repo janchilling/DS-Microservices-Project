@@ -80,15 +80,12 @@ function App() {
               <Route path='/manage-users' element={<ManageUserPage/>}/>
               <Route path='/all-users' element={<ViewallUsersPage/>}/>
               <Route path='/all-instructors' element={<ViewallInstructorsPage/>}/>
-              //1
               <Route path='/all-enrollments' element={<AllEnrollmentsPage/>}/>
-              //2
               <Route path='/all-payments' element={<AllPaymentsPage/>}/>
               <Route path='/all-Courses' element={<ViewAllCourses/>}/>
               <Route path='/coursePage/:id' element={<BoughtCoursePage/>}/>
               <Route path='/confirmationPage' element={<PaymentConfirmationPage/>}/>
               <Route path='/send-email' element={<EmailFormPage/>}/>
-              //3
               <Route path='/user-enrollments' element={<UserEnrollmentsPage/>}/>
             </Routes>
           <Footer/>

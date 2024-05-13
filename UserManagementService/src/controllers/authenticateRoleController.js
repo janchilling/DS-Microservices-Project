@@ -1,4 +1,5 @@
 const authenticateRoleController = {
+
     // Controller method for admin role
     adminRole: (req, res) => {
         res.status(200).json({ message: "Admin access granted" });
