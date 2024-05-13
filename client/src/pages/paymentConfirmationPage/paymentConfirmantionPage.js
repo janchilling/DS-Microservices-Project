@@ -1,6 +1,7 @@
-import {useEffect} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import usePayment from "../../hooks/usePayment";
+import useSendEmailToStudent from "../../hooks/useSendEmailToStudent";
 import useViewCourseById from "../../hooks/useViewCourseById";
 import LoadingSpinner from "../../components/loadingSpinnerComponent/loadingSpinnerComponent";
 
@@ -9,49 +10,71 @@ export default function PaymentConfirmationPage() {
     const courseId = new URLSearchParams(location.search).get("courseId");
     const user = JSON.parse(localStorage.getItem("user"));
     const token = localStorage.getItem("token");
-    const {updatePayment, updateEnrollment} = usePayment();
-    const {course, loading, error, viewOneCourseById} = useViewCourseById();
+    const { updatePayment, updateEnrollment } = usePayment();
+    const { course: fetchedCourse, loading, error, viewOneCourseById } = useViewCourseById();
+    const {sendEmailToStudent} = useSendEmailToStudent(); // Initialize the useSendEmail hook
     const navigate = useNavigate();
+    const [isUpdated, setIsUpdated] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            if (courseId) {
-                // Fetch course details based on courseId
-                viewOneCourseById(courseId);
-                console.log("Course data fetched:", course);
-            }
-            try {
-                console.log("Hi1")
-                if (courseId) {
-                    if (course && user) {
-                        const paymentProduct = {
-                            courseId: course._id,
-                            price: course.Price,
-                            courseCode: course.CourseCode,
-                            userId: user._id
-                        };
-                        console.log(paymentProduct)
-                        const enrollmentProduct = {
-                            userId: user._id,
-                            courseId: course._id
-                        };
-                        console.log(enrollmentProduct)
-                        await updatePayment(paymentProduct, token);
-                        console.log("3")
-                        await updateEnrollment(enrollmentProduct, token);
-                        console.log("4")
-                        navigate(`/coursePage/${courseId}`);
-                    }
+            if (courseId && user && !isUpdated) {
+                try {
+                    console.log("CourseID:", courseId);
+                    console.log("user:", user);
+                    await viewOneCourseById(courseId);
+                } catch (error) {
+                    console.error("Error fetching course data:", error);
                 }
-            } catch (error) {
-                console.error("Error handling payment and enrollment:", error);
             }
         };
 
         fetchData();
+    }, [courseId, user, viewOneCourseById]);
 
-    }, [courseId]);
+    useEffect(() => {
+        const performPaymentAndEnrollment = async () => {
+            if (fetchedCourse && user && !isUpdated) {
+                setIsUpdated(true); // Update state to indicate that updates have been performed
+                const paymentProduct = {
+                    courseId: fetchedCourse._id,
+                    price: fetchedCourse.Price,
+                    courseCode: fetchedCourse.CourseCode,
+                    userId: user._id
+                };
+                const enrollmentProduct = {
+                    userId: user._id,
+                    courseId: fetchedCourse._id,
+                    additionalInfo: "Enrollment of " + fetchedCourse.CourseCode + " by " + user.Fullname,
+                };
+                const sendConfirmEmail = {
+                    toEmail: user.Email,
+                    fromName: "Manage_Institute",
+                    message: "You enrolled to our " + fetchedCourse.CourseName + " Module",
+                };
+                try {
+                    await Promise.all([
+                        updatePayment(paymentProduct, token),
+                        updateEnrollment(enrollmentProduct, token),
+                        sendEmailToStudent(sendConfirmEmail)
+                    ]);
+                    
+                    console.log("Course data fetched:", fetchedCourse);
+                    console.log("Performing payment and enrollment updates with Notification...");
+                    
+                    navigate(`/coursePage/${courseId}`);
+                } catch (error) {
+                    console.error("Error performing payment and enrollment updates:", error);
+                }
+            }
+        };
 
+        performPaymentAndEnrollment();
+    }, [fetchedCourse, user, token, navigate, updatePayment, updateEnrollment, courseId, isUpdated]);
 
-    return <LoadingSpinner/>;
+    if (loading) {
+        return <LoadingSpinner />;
+    }
+
+    return null;
 }
