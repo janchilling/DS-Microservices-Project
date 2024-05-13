@@ -6,8 +6,8 @@ import useDeleteUser from '../../hooks/useUserDelete';
 const ViewallUsers = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
-    const { user } = useContext(UserContext);
-    const { studentallData } = useFetchUserDetails(user._id, searchTerm);
+    const { user, token } = useContext(UserContext);
+    const { studentallData } = useFetchUserDetails(user?._id, searchTerm);
     const { onDeleteUser } = useDeleteUser();
     const [filteredStudents, setFilteredStudents] = useState([]);
 
