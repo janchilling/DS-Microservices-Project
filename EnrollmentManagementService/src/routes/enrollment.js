@@ -9,7 +9,8 @@ const {
     getEnrollmentsByCourse,
     updateEnrollmentStatus,
     cancelEnrollment,
-    checkEnrollmentStatus
+    checkEnrollmentStatus,
+    getEnrollmentByUserCourse
 } = require("../controllers/enrollmentController");
 
 // Create Enrollment
@@ -32,5 +33,8 @@ router.put("/cancel/:enrollmentId", isAdmin, cancelEnrollment);
 
 // Check Enrollment Status
 router.get("/status/:enrollmentId", isAdmin, checkEnrollmentStatus);
+
+// Get Enrollment by User and Course
+router.get("/user/:userId/course/:courseId", getEnrollmentByUserCourse);
 
 module.exports = router;
