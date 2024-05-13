@@ -62,7 +62,9 @@ const usePayment = () => {
         const enrollmentRequest = {
             userId: product.userId,
             courseId: product.courseId,
-            status: "active"
+            status:"active",
+            additionalInfo:product.additionalInfo,
+            
         };
         console.log(enrollmentRequest)
 
