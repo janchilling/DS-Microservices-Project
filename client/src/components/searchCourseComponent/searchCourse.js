@@ -1,16 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from "axios";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import "../searchCourseComponent/searchCourse.css";
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../../ContextComponent/ContextComponent';
 
 const SearchBar = () => {
+    const { user } = useContext(UserContext); 
     const [courses, setCourses] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [enrollmentStatus, setEnrollmentStatus] = useState({});
+    const navigate = useNavigate();
 
     useEffect(() => {
         getCourses();
     }, []);
+
+    useEffect(() => {
+        const fetchEnrollmentStatus = async () => {
+            const status = {};
+            for (const course of courses) {
+                const isEnrolled = await checkEnrollment(course._id);
+                status[course._id] = isEnrolled;
+            }
+            setEnrollmentStatus(status);
+        };
+        fetchEnrollmentStatus();
+    }, [courses]);
 
     const getCourses = async () => {
         try {
@@ -23,46 +37,46 @@ const SearchBar = () => {
         }
     }
 
-    const searchCourse = async (event) => {
-        let key = event.target.value;
-        setSearchTerm(key);
-        if (key) {
-            try {
-                const result = await fetch(`http://localhost:8800/CourseManagementService/course/searchCourse/${key}`);
-                const data = await result.json();
-                if (data) {
-                    setCourses(data);
-                }
-            } catch (error) {
-                console.error("Error searching courses:", error);
-            }
-        } else {
-            getCourses();
+    const enrollCourse = (courseId) => {
+        navigate(`/order-summary?courseId=${courseId}`);
+    }
+
+    const checkEnrollment = async (courseId) => {
+        try {
+            console.log("Checking enrollment for courseId:", courseId);
+            const response = await fetch(`http://localhost:8800/EnrollmentManagementService/enrollment/user/${user._id}/course/${courseId}`);
+            console.log("Status code for courseId", courseId, ":", response.status);
+            return response.status === 200; // Returns true if enrolled, false otherwise
+        } catch (error) {
+            console.error("Error checking enrollment:", error);
+            return false;
         }
     }
 
     const renderCourses = () => {
-        return courses.map((course, index) => (
-            <div key={index} className="w-1/5 p-4">
-                <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6">
-                    <h2 className="text-base font-bold text-center pb-3">{course.CourseName}</h2>
-                    <img className="ViewAllCoursesImage pb-2" src={course.Image} alt={course.CourseName} />
-                    <p className="text-base font-bold text-center text-black">Instructor: {course.Instructor}</p>
-                    <p className="text-sm text-gray-600 text-center">{course.CourseCode}</p>
-                    <div className="flex justify-center items-center">
-                        <p className="text-2xl font-bold text-gray-600 mr-8">${course.Price}</p>
-                        <p className="text-2xl font-bold text-gray-600">{course.Duration} hrs.</p>
-                    </div>
-                    <div className="button-container">
-                        <button className="mt-4 bg-orange-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Enroll Course
-                        </button>
-                    </div>
+        return courses.map((course, index) => {
+            const isEnrolled = enrollmentStatus[course._id];
 
+            return (
+                <div key={index} className="w-1/5 p-4">
+                    <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6">
+                        <h2 className="text-base font-bold text-center pb-3">{course.CourseName}</h2>
+                        <img className="ViewAllCoursesImage pb-2" src={course.Image} alt={course.CourseName} />
+                        <p className="text-base font-bold text-center text-black">Instructor: {course.Instructor}</p>
+                        <p className="text-sm text-gray-600 text-center">{course.CourseCode}</p>
+                        <div className="flex justify-center items-center">
+                            <p className="text-2xl font-bold text-gray-600 mr-8">${course.Price}</p>
+                            <p className="text-2xl font-bold text-gray-600">{course.Duration} hrs.</p>
+                        </div>
+                        <div className="button-container">
+                            <button onClick={() => enrollCourse(course._id)} disabled={isEnrolled} className={`mt-4 ${isEnrolled ? 'bg-gray-400' : 'bg-orange-500 hover:bg-blue-600'} text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}>
+                                {isEnrolled ? 'Enrolled' : 'Enroll Course'}
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-        ));
+            );
+        });
     };
 
     return (
@@ -75,7 +89,7 @@ const SearchBar = () => {
                         type="text"
                         className="py-2 px-4 pr-12 border border-gray-300 rounded-l focus:outline-none focus:border-blue-500 w-96"
                         placeholder="Search for courses"
-                        onChange={searchCourse}
+                        onChange={(event) => setSearchTerm(event.target.value)}
                     />
                 </div>
             </div>

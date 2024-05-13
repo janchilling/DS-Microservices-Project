@@ -6,7 +6,7 @@ import UserContext from '../../../ContextComponent/ContextComponent';
 const useAuth = () => {
 
     const navigate = useNavigate();
-    const { setUser } = useContext(UserContext);
+    const { setUser, setToken } = useContext(UserContext);
 
     const studentSignup = async (Fullname, Email, Password) => {
         try {
@@ -53,10 +53,11 @@ const useAuth = () => {
             if (response.status === 200) {
                 alert("Login Successfully...!");
                 setUser(response.data.user);
-                navigate('/');
+                setToken(response.data.token);
+                navigate('/home');
             } 
         } catch (error) {
-            alert(error);
+            alert("Please Enter Valid Credentials..!");
         }
     }
 
