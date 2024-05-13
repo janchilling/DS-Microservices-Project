@@ -38,22 +38,28 @@ import EmailFormPage from "./pages/emailFormPage/emailFormPage";
  
 function App() {
 
-  // user details pass
+  // user and token details pass
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  const [token, setToken] = useState(()=> {
+    const storedToken = localStorage.getItem("token");
+    return storedToken ? JSON.parse(storedToken) : null;
+  });
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", JSON.stringify(token));
     } else {
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
     }
   }, [user]);
 
   return (
       <Router>
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, token, setToken }}>
           <Header/>
             <Routes>
               <Route path='' element={<Index/>}/>

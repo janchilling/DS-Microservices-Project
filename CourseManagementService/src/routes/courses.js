@@ -1,5 +1,11 @@
 const router = require("express").Router();
-// const { isAdmin, isInstructor, isStudent } = require("../../../UserManagementService/src/middleware/authMiddleware");
+const { authenticateadminRole,
+        authenticateadminAndInstructorRole,
+        authenticateadminAndStudentRole,
+        authenticatestudentRole,
+        authenticateinstructorRole,
+        authenticateinstructorAndStudentRole
+} = require('../middleware/authenticationRole');
 
 const {
     createCourse,

@@ -61,7 +61,7 @@ const Testimonial = () => {
               to='/all-Courses'
               className='p-3 px-6 pt-2 text-white bg-orange-600 rounded-full baseline hover:bg-orange-400'
             >
-              Get Started
+              View Courses
             </Link>
           ) : (
               <Link
