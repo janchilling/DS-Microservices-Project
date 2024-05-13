@@ -25,7 +25,7 @@ router.get("/user/:userId", getEnrollmentsByUser);
 router.get("/course/:courseId", getEnrollmentsByCourse);
 
 // Update Enrollment Status
-router.put("/updateStatus/:enrollmentId", isAdmin, updateEnrollmentStatus);
+router.put("/updateStatus/:enrollmentId", updateEnrollmentStatus);
 
 // Cancel Enrollment
 router.put("/cancel/:enrollmentId", isAdmin, cancelEnrollment);

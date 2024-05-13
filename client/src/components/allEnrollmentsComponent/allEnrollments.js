@@ -7,6 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import axios from 'axios'; // Import Axios
+import useViewStudentById from '../../hooks/useViewStudentByID';
+import useViewCourseById from '../../hooks/useViewCourseById';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -15,7 +21,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    
   },
 }));
 
@@ -39,6 +44,8 @@ const formatDate = (dateString) => {
 
 const AllEnrollments = () => {
   const [enrollments, setEnrollments] = useState([]);
+  const { viewSingleStudent } = useViewStudentById();
+  const { viewOneCourseById } = useViewCourseById();
 
   useEffect(() => {
     // Fetch data when component mounts
@@ -58,30 +65,79 @@ const AllEnrollments = () => {
     }
   };
 
+  const [studentData, setStudentData] = useState({});
+  const [courseData, setCourseData] = useState({});
+
+  useEffect(() => {
+    // Fetch student and course data
+    enrollments.forEach(async (row) => {
+      try {
+        const studentResponse = await axios.get(`http://localhost:8800/UserManagementService/student/get/${row.userId}`);
+        const courseResponse = await axios.get(`http://localhost:8800/CourseManagementService/course/getCourse/${row.courseId}`);
+        setStudentData(prevState => ({ ...prevState, [row.userId]: studentResponse.data.student }));
+        setCourseData(prevState => ({ ...prevState, [row.courseId]: courseResponse.data.course }));
+      } catch (error) {
+        console.error('Error fetching student or course data:', error);
+      }
+    });
+  }, [enrollments]);
+
+  const handleStatusChange = async (enrollmentId, newStatus) => {
+    try {
+      await axios.put(`http://localhost:8800/EnrollmentManagementService/enrollment/updateStatus/${enrollmentId}`, { status: newStatus });
+      // Update the status in the frontend
+      const updatedEnrollments = enrollments.map(enrollment =>
+        enrollment._id === enrollmentId ? { ...enrollment, status: newStatus } : enrollment
+      );
+      setEnrollments(updatedEnrollments);
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>user ID</StyledTableCell>
-            <StyledTableCell align="right">Course ID</StyledTableCell>
+            <StyledTableCell>Student Name</StyledTableCell>
+            <StyledTableCell align="right">Course Name</StyledTableCell>
             <StyledTableCell align="right">Enrollment Date</StyledTableCell>
             <StyledTableCell align="right">Status</StyledTableCell>
             <StyledTableCell align="right">AdditionalInfo</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {enrollments.map((row) => (
-            <StyledTableRow key={row._id}>
-              <StyledTableCell component="th" scope="row">
-                {row.userId}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.courseId}</StyledTableCell>
-              <StyledTableCell align="right">{formatDate(row.enrollmentDate)}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
-              <StyledTableCell align="right">{row.additionalInfo}</StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {enrollments.map((row) => {
+            const student = studentData[row.userId];
+            const course = courseData[row.courseId];
+
+            return (
+              <StyledTableRow key={row._id}>
+                <StyledTableCell component="th" scope="row">
+                  {student ? student.Fullname : 'Loading...'}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {course ? course.CourseName : 'Loading...'}
+                </StyledTableCell>
+                <StyledTableCell align="right">{formatDate(row.enrollmentDate)}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <FormControl>
+                    <Select
+                      value={row.status}
+                      onChange={(event) => handleStatusChange(row._id, event.target.value)}
+                    >
+                      <MenuItem value="pending">Pending</MenuItem>
+                      <MenuItem value="active">Active</MenuItem>
+                      <MenuItem value="completed">Completed</MenuItem>
+                      <MenuItem value="canceled">Canceled</MenuItem>
+                    </Select>
+                  </FormControl>
+                </StyledTableCell>
+                <StyledTableCell align="right">{row.additionalInfo}</StyledTableCell>
+              </StyledTableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import axios from 'axios';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -15,7 +16,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    
   },
 }));
 
@@ -38,48 +38,66 @@ const formatDate = (dateString) => {
 };
 
 const AllPayments = () => {
-  const [enrollments, setEnrollments] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   useEffect(() => {
     // Fetch data when component mounts
-    fetchEnrollments();
+    fetchPayments();
   }, []);
 
-  const fetchEnrollments = async () => {
+
+  const fetchPayments = async () => {
     try {
       const response = await fetch('http://localhost:8800/PaymentManagementService/payment/getAllPayments');
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
       const data = await response.json();
-      setEnrollments(data);
+      setPayments(data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+
+  const [studentData, setStudentData] = useState({});
+  const [courseData, setCourseData] = useState({});
+
+  useEffect(() => {
+    // Fetch student and course data for each payment
+    payments.forEach(async (payment) => {
+      try {
+        const studentResponse = await axios.get(`http://localhost:8800/UserManagementService/student/get/${payment.UserId}`);
+        const courseResponse = await axios.get(`http://localhost:8800/CourseManagementService/course/getCourse/${payment.CourseId}`);
+        setStudentData(prevState => ({ ...prevState, [payment.UserId]: studentResponse.data.student }));
+        setCourseData(prevState => ({ ...prevState, [payment.CourseId]: courseResponse.data.course }));
+      } catch (error) {
+        console.error('Error fetching student or course data:', error);
+      }
+    });
+  }, [payments]);
 
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>user ID</StyledTableCell>
-            <StyledTableCell align="right">Course ID</StyledTableCell>
-            <StyledTableCell align="right">Course Code</StyledTableCell>
+            <StyledTableCell>Student Name</StyledTableCell>
+            <StyledTableCell align="right">Course Name</StyledTableCell>
             <StyledTableCell align="right">Payment Price</StyledTableCell>
             <StyledTableCell align="right">Payment Date</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {enrollments.map((row) => (
-            <StyledTableRow key={row._id}>
+          {payments.map((payment) => (
+            <StyledTableRow key={payment._id}>
               <StyledTableCell component="th" scope="row">
-                {row.UserId}
+                {studentData[payment.userId] ? studentData[payment.UserId].Fullname : 'Loading...'}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.CourseId}</StyledTableCell>
-              <StyledTableCell align="right">{row.CourseCode}</StyledTableCell>
-              <StyledTableCell align="right">{row.Price}</StyledTableCell>
-              <StyledTableCell align="right">{formatDate(row.PaymentDate)}</StyledTableCell>
+              <StyledTableCell align="right">
+                {courseData[payment.courseId] ? courseData[payment.CourseId].CourseName : 'Loading...'}
+              </StyledTableCell>
+              <StyledTableCell align="right">{payment.Price}</StyledTableCell>
+              <StyledTableCell align="right">{formatDate(payment.PaymentDate)}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

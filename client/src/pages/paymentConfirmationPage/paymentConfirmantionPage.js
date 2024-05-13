@@ -44,12 +44,13 @@ export default function PaymentConfirmationPage() {
                 };
                 const enrollmentProduct = {
                     userId: user._id,
-                    courseId: fetchedCourse._id
+                    courseId: fetchedCourse._id,
+                    additionalInfo: "Enrollment of " + fetchedCourse.CourseCode + " by " + user.Fullname,
                 };
                 const sendConfirmEmail = {
                     toEmail: user.Email,
                     fromName: "MBKT_Institute",
-                    message: "You enrolled to our" + fetchedCourse.CourseName,
+                    message: "You enrolled to our " + fetchedCourse.CourseName,
                 };
                 try {
                     await Promise.all([
