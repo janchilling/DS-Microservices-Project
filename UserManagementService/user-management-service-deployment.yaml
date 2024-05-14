@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-management-service
+  template:
+    metadata:
+      labels:
+        app: user-management-service
+    spec:
+      containers:
+      - name: user-management-service
+        image: manulagunatilleke/ds-microservices-project-user-management-service:latest
+        ports:
+        - containerPort: 3001
