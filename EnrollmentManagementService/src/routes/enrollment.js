@@ -1,6 +1,4 @@
 const router = require("express").Router();
-//const { isAdmin, isInstructor, isStudent } = require("../../../UserManagementService/src/middleware/authMiddleware");
-const { isAdmin, isInstructor, isStudent } = require("../middleware/authMiddleware");
 
 const {
     createEnrollment,
@@ -29,10 +27,10 @@ router.get("/course/:courseId", getEnrollmentsByCourse);
 router.put("/updateStatus/:enrollmentId", updateEnrollmentStatus);
 
 // Cancel Enrollment
-router.put("/cancel/:enrollmentId", isAdmin, cancelEnrollment);
+router.put("/cancel/:enrollmentId", cancelEnrollment);
 
 // Check Enrollment Status
-router.get("/status/:enrollmentId", isAdmin, checkEnrollmentStatus);
+router.get("/status/:enrollmentId", checkEnrollmentStatus);
 
 // Get Enrollment by User and Course
 router.get("/user/:userId/course/:courseId", getEnrollmentByUserCourse);
