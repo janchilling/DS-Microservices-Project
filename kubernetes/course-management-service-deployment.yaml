@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: course-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: course-management-service
+  template:
+    metadata:
+      labels:
+        app: course-management-service
+    spec:
+      containers:
+      - name: course-management-service
+        image: manulagunatilleke/ds-microservices-project-course-management-service:latest
+        ports:
+        - containerPort: 3002

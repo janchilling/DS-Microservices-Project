@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enrollment-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: enrollment-management-service
+  template:
+    metadata:
+      labels:
+        app: enrollment-management-service
+    spec:
+      containers:
+      - name: enrollment-management-service
+        image: manulagunatilleke/ds-microservices-project-enrollment-management-service:latest
+        ports:
+        - containerPort: 3004

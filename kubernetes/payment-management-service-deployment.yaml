@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-management-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-management-service
+  template:
+    metadata:
+      labels:
+        app: payment-management-service
+    spec:
+      containers:
+      - name: payment-management-service
+        image: manulagunatilleke/ds-microservices-project-payment-management-service:latest
+        ports:
+        - containerPort: 3003
